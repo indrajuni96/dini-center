@@ -7,7 +7,8 @@ const GameStack = createStackNavigator()
 
 const GameStackScreen = () => {
   return (
-    <GameStack.Navigator>
+    <GameStack.Navigator
+      headerMode='none'>
       <GameStack.Screen name="Game" component={Game} />
     </GameStack.Navigator>
   )

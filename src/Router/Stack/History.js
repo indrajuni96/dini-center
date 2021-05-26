@@ -7,7 +7,8 @@ const HistoryStack = createStackNavigator()
 
 const HistoryStackScreen = () => {
   return (
-    <HistoryStack.Navigator>
+    <HistoryStack.Navigator
+      headerMode='none'>
       <HistoryStack.Screen name="History" component={History} />
     </HistoryStack.Navigator>
   )

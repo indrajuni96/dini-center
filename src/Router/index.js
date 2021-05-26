@@ -1,12 +1,12 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 
-import { HomeStackScreen } from './Stack'
+import TabApp from './BottomTab'
 
 const Router = () => {
   return (
     <NavigationContainer>
-      <HomeStackScreen />
+      <TabApp />
     </NavigationContainer>
   )
 }
