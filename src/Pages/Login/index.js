@@ -2,11 +2,17 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import Styles from './Styles'
+import {
+  Space,
+  Header
+} from '../../Components'
 
-const Login = () => {
+const Login = ({ navigation: { goBack } }) => {
   return (
     <View style={Styles.container}>
-      <Text>Page Login</Text>
+      <Header
+        title='Login'
+        onPress={() => goBack()} />
     </View>
   )
 }

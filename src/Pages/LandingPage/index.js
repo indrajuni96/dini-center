@@ -10,7 +10,7 @@ import {
 } from '../../Components'
 import { DataCarousel } from '../../Utils'
 
-const LandingPage = () => {
+const LandingPage = ({ navigation: { navigate } }) => {
   const [activeSlide, setActiveSlide] = useState(0)
 
   let carouselRef = useRef()
@@ -60,12 +60,14 @@ const LandingPage = () => {
       <View style={Styles.wrapperButton}>
         <Button
           red
-          title='Masuk' />
+          title='Masuk'
+          onPress={() => navigate('Login')} />
 
         <Space height={10} />
 
         <Button
-          title='Daftar' />
+          title='Daftar'
+          onPress={() => navigate('Register')} />
       </View>
     </View>
   )
