@@ -5,25 +5,20 @@ import { colors } from '../../Utils'
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 
 const Styles = StyleSheet.create({
-  content: {
-    height: SCREEN_HEIGHT * 0.085,
-    borderWidth: 1,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  pressable: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.white,
+    paddingVertical: SCREEN_HEIGHT * 0.02,
+    paddingHorizontal: SCREEN_WIDTH * 0.03,
+  },
+  contentForm: {
+    paddingHorizontal: SCREEN_WIDTH * 0.03,
   },
   text: {
     textAlign: 'center',
     fontSize: SCREEN_HEIGHT * 0.025,
     fontFamily: 'Poppins-SemiBold'
   },
-  ripple: {
-    color: colors.silverLigth
-  }
 })
 
 export default Styles

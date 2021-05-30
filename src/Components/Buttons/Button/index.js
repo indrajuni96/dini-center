@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 
 import Styles from './Styles'
-import { colors } from '../../Utils'
+import { colors } from '../../../Utils'
 
 const Button = ({ red, title, onPress }) => {
   const color = red ? colors.white : colors.black

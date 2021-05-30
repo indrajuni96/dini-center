@@ -9,7 +9,16 @@ import IconIonic from 'react-native-vector-icons/dist/Ionicons'
 import Styles from './Styles'
 import { colors } from '../../Utils'
 
-const Header = ({ title = '', onPress }) => {
+const Header = ({ isDefault, title = '', onPress }) => {
+  if (isDefault) {
+    return (
+      <View>
+        <Text style={Styles.text}>{title}</Text>
+      </View>
+    )
+  }
+
+
   return (
     <View style={Styles.content}>
       <Pressable
