@@ -11,13 +11,14 @@ import Styles from './Styles'
 import Space from '../Space'
 import { colors } from '../../Utils'
 
-const Input = ({ securePassword, number, email, icon, title, value, error = '', onChangeText, onPress }) => {
+const Input = ({ editable, securePassword, number, email, icon, title, value, error = '', onChangeText, onPress }) => {
   return (
     <View style={Styles.content}>
       <Text style={Styles.text}>{title}</Text>
 
       <View style={Styles.contentInput}>
         <TextInput
+          editable={!editable ? true : false}
           secureTextEntry={securePassword}
           value={value}
           style={Styles.textInput}

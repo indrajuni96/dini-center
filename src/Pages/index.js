@@ -5,6 +5,7 @@ import Profile from './Profile'
 import History from './History'
 import Register from './Register'
 import LandingPage from './LandingPage'
+import HasilDiagnosa from './HasilDiagnosa'
 
 export {
   Home,
@@ -13,5 +14,6 @@ export {
   Profile,
   History,
   Register,
-  LandingPage
+  LandingPage,
+  HasilDiagnosa
 }

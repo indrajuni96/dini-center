@@ -12,7 +12,7 @@ import {
   FormDiagnosa
 } from '../../Components'
 
-const Register = ({ navigation: { goBack } }) => {
+const Register = ({ navigation: { goBack, navigate } }) => {
   const [isNext, setIsNext] = useState(false)
   const [securePassword, setSecurePassword] = useState(true);
 
@@ -30,7 +30,8 @@ const Register = ({ navigation: { goBack } }) => {
         showsVerticalScrollIndicator={false}>
         <View style={Styles.contentForm}>
           {isNext ?
-            <FormDiagnosa />
+            <FormDiagnosa
+              onPress={() => navigate('HasilDiagnosa')} />
             : <FormRegister
               securePassword={securePassword}
               onPressNext={() => setIsNext(true)}

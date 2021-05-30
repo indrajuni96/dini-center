@@ -7,7 +7,7 @@ import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import Radio from '../../Buttons/Radio'
 
-const FormDiagnosa = ({ }) => {
+const FormDiagnosa = ({ onPress }) => {
   const [G1, setG1] = useState(false)
   const [G2, setG2] = useState(false)
   const [G3, setG3] = useState(false)
@@ -93,7 +93,7 @@ const FormDiagnosa = ({ }) => {
       <Button
         red
         title='Daftar'
-        onPress={() => console.log('daftar')} />
+        onPress={onPress} />
     </>
   )
 }
