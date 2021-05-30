@@ -11,6 +11,11 @@ const Styles = StyleSheet.create({
     paddingVertical: SCREEN_HEIGHT * 0.02,
     paddingHorizontal: SCREEN_WIDTH * 0.03,
   },
+  scrollView: {
+  },
+  contentForm: {
+    paddingHorizontal: SCREEN_WIDTH * 0.03,
+  },
 })
 
 export default Styles
