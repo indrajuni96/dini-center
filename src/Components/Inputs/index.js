@@ -11,7 +11,7 @@ import Styles from './Styles'
 import Space from '../Space'
 import { colors } from '../../Utils'
 
-const Input = ({ editable, securePassword, number, email, icon, title, value, error = '', onChangeText, onPress }) => {
+const Input = ({ editable, securePassword, number, email, icon, title, value, touched, errors, onChangeText, onBlur, onPress }) => {
   return (
     <View style={Styles.content}>
       <Text style={Styles.text}>{title}</Text>
@@ -22,6 +22,7 @@ const Input = ({ editable, securePassword, number, email, icon, title, value, er
           secureTextEntry={securePassword}
           value={value}
           style={Styles.textInput}
+          onBlur={onBlur}
           onChangeText={onChangeText}
           autoCorrect={false}
           autoCapitalize='none'
@@ -38,10 +39,8 @@ const Input = ({ editable, securePassword, number, email, icon, title, value, er
           : null}
       </View>
 
-      <Space height={5} />
-
       <View style={Styles.contentError}>
-        <Text style={Styles.textError}>{ }</Text>
+        <Text style={Styles.textError}>{touched && errors ? errors : ''}</Text>
       </View>
     </View>
   )

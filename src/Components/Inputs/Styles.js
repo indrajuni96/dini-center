@@ -13,6 +13,7 @@ const Styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular'
   },
   contentInput: {
+    height: SCREEN_HEIGHT * 0.055,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: colors.silverLigth,
