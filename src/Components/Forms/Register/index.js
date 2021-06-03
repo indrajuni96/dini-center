@@ -1,18 +1,24 @@
 import React from 'react'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
+import { setFormRegister } from '../../../Redux/Actions/Auth'
 
 const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) => {
+  const dispatch = useDispatch()
+
+  const formRegister = useSelector((state) => state.AuthStore.formRegister)
+
   const initialValues = {
-    namaOrangTua: '',
-    noTelepon: '',
-    alamat: '',
-    email: '',
-    password: ''
+    namaOrangTua: formRegister.namaOrangTua || '',
+    noTelepon: formRegister.noTelepon || '',
+    alamat: formRegister.alamat || '',
+    email: formRegister.email || '',
+    password: formRegister.password || ''
   }
 
   const validationSchema = Yup.object().shape({
@@ -36,15 +42,14 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
   })
 
   const onSubmit = (values) => {
-    console.log(values)
-
+    dispatch(setFormRegister(values))
     onPressNext()
   }
 
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={onSubmit}>
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <>

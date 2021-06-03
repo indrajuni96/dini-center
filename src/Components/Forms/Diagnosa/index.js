@@ -5,7 +5,7 @@ import Styles from './Styles'
 import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
-import Radio from '../../Buttons/Radio'
+import CardDiagnosa from '../../Cards/Diagnosa'
 
 const FormDiagnosa = ({ onPress }) => {
   const [G1, setG1] = useState(false)
@@ -13,82 +13,43 @@ const FormDiagnosa = ({ onPress }) => {
   const [G3, setG3] = useState(false)
   const [G4, setG4] = useState(false)
 
+  const [namaAnak, setNamaAnak] = useState('')
+
   return (
     <>
       <View>
         <Input
           title='Nama Anak'
           error='Wajib Diisi'
-          onChangeText={() => console.log('on change text')} />
+          value={namaAnak}
+          onChangeText={(text) => setNamaAnak(text)} />
       </View>
 
-      <View>
-        <Text style={Styles.text}>Menolak dipeluk ?</Text>
+      <CardDiagnosa
+        title='Menolak dipeluk ?'
+        select={G1}
+        onPressIya={() => setG1(true)}
+        onPressTidak={() => setG1(false)} />
 
-        <View style={Styles.wrapperRadio}>
-          <Radio
-            select={G1 ? true : false}
-            onPress={() => setG1(true)} />
+      <CardDiagnosa
+        title='Saat bermain bila didekati malah menjauh ?'
+        select={G2}
+        onPressIya={() => setG2(true)}
+        onPressTidak={() => setG2(false)} />
 
-          <Radio
-            isDefault
-            select={!G1 ? true : false}
-            onPress={() => setG1(false)} />
-        </View>
-      </View>
+      <CardDiagnosa
+        title='Bicara monoton seperti robot ?'
+        select={G3}
+        onPressIya={() => setG3(true)}
+        onPressTidak={() => setG3(false)} />
 
-      <Space height={20} />
+      <CardDiagnosa
+        title='Kata-kata yang tidak dapat mengerti orang lain ?'
+        select={G4}
+        onPressIya={() => setG4(true)}
+        onPressTidak={() => setG4(false)} />
 
-      <View>
-        <Text style={Styles.text}>Saat bermain bila didekati malah menjauh ?</Text>
-
-        <View style={Styles.wrapperRadio}>
-          <Radio
-            select={G2 ? true : false}
-            onPress={() => setG2(true)} />
-
-          <Radio
-            isDefault
-            select={!G2 ? true : false}
-            onPress={() => setG2(false)} />
-        </View>
-      </View>
-
-      <Space height={20} />
-
-      <View>
-        <Text style={Styles.text}>Bicara monoton seperti robot ?</Text>
-
-        <View style={Styles.wrapperRadio}>
-          <Radio
-            select={G3 ? true : false}
-            onPress={() => setG3(true)} />
-
-          <Radio
-            isDefault
-            select={!G3 ? true : false}
-            onPress={() => setG3(false)} />
-        </View>
-      </View>
-
-      <Space height={20} />
-
-      <View>
-        <Text style={Styles.text}>Kata-kata yang tidak dapat mengerti orang lain ?</Text>
-
-        <View style={Styles.wrapperRadio}>
-          <Radio
-            select={G4 ? true : false}
-            onPress={() => setG4(true)} />
-
-          <Radio
-            isDefault
-            select={!G4 ? true : false}
-            onPress={() => setG4(false)} />
-        </View>
-      </View>
-
-      <Space height={30} />
+      <Space height={10} />
 
       <Button
         red

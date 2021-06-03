@@ -4,7 +4,8 @@ import Header from './Headers'
 import Radio from './Buttons/Radio'
 import Button from './Buttons/Button'
 import Loading from './Loading'
-import CardLadingPage from './Cards'
+import CardDiagnosa from './Cards/Diagnosa'
+import CardLadingPage from './Cards/LandingPage'
 import FormRegister from './Forms/Register'
 import FormDiagnosa from './Forms/Diagnosa'
 
@@ -17,5 +18,6 @@ export {
   Loading,
   FormRegister,
   FormDiagnosa,
+  CardDiagnosa,
   CardLadingPage
 }

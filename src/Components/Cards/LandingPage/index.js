@@ -5,14 +5,14 @@ import {
 } from 'react-native'
 
 import Styles from './Styles'
-import Space from '../Space'
+import Space from '../../Space'
 import {
   TimeSvg,
   DoctorSvg,
   ProcessSvg
-} from '../../Assets'
+} from '../../../Assets'
 
-const Button = ({ svg, title }) => {
+const CardLadingPage = ({ svg, title }) => {
   return (
     <View style={Styles.content}>
 
@@ -29,4 +29,4 @@ const Button = ({ svg, title }) => {
   )
 }
 
-export default Button
+export default CardLadingPage
