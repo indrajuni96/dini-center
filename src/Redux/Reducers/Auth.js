@@ -23,6 +23,11 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
         formRegister: action.data
       }
+    case Types.CLEAR_FORM_REGISTER:
+      return {
+        ...state,
+        formRegister: {}
+      }
     default:
       return state
   }

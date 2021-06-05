@@ -1,5 +1,6 @@
 import { ToastAndroid } from 'react-native'
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
 import * as Types from './ActionTypes'
 
@@ -20,6 +21,10 @@ export const setFormRegister = (data) => ({
   data
 })
 
+export const clearFormRegister = () => ({
+  type: Types.CLEAR_FORM_REGISTER
+})
+
 export const loginUser = (data) => async (dispatch) => {
   try {
     dispatch(isLoading(true))
@@ -37,6 +42,32 @@ export const loginUser = (data) => async (dispatch) => {
     if (error.code === 'auth/network-request-failed') errorMessage = 'Tidak ada koneksi internet'
 
     ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+  } finally {
+    dispatch(isLoading(false))
+  }
+}
+
+export const registerUser = (data) => async (dispatch, getState) => {
+  try {
+    dispatch(isLoading(true))
+
+    const formRegister = getState().AuthStore.formRegister
+
+    const responseRegister = await auth().createUserWithEmailAndPassword(formRegister.email.toLowerCase(), formRegister.password)
+
+    await firestore().collection('users')
+      .doc(responseRegister.user.uid)
+      .set({
+        namaOrangTua: formRegister.namaOrangTua,
+        noTelepon: formRegister.noTelepon,
+        alamat: formRegister.alamat,
+        email: formRegister.email,
+        namaAnak: data.namaAnak,
+      })
+
+  } catch (error) {
+    console.log(error)
+    ToastAndroid.show(error, ToastAndroid.SHORT);
   } finally {
     dispatch(isLoading(false))
   }

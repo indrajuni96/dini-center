@@ -1,9 +1,12 @@
 import React, { useState, useCallback } from 'react'
 import {
   View,
-  FlatList
+  FlatList,
+  ToastAndroid
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import Space from '../../Space'
@@ -11,10 +14,16 @@ import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
 import { DataDiagnosa } from '../../../Utils'
+import { registerUser } from '../../../Redux/Actions/Auth'
 
-const FormDiagnosa = ({ onPress }) => {
+const FormDiagnosa = ({ navigate }) => {
   const [namaAnak, setNamaAnak] = useState('')
+  const [messageError, setMessageError] = useState('')
   const [dataDiagnosa, setDataDiagnosa] = useState([])
+
+  const dispatch = useDispatch()
+
+  const { isConnected } = useNetInfo()
 
   useFocusEffect(useCallback(() => {
     loadData()
@@ -61,13 +70,28 @@ const FormDiagnosa = ({ onPress }) => {
     setDataDiagnosa(newData)
   }
 
+  const onPressDaftar = () => {
+    if (isConnected) {
+      if (namaAnak !== '') {
+        dispatch(registerUser({ namaAnak, formDiagnosa: dataDiagnosa }))
+        navigate('HasilDiagnosa')
+      } else {
+        setMessageError('Wajib Diisi')
+      }
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
+  }
+
   return (
     <View style={Styles.contentForm}>
       <View>
         <Input
           title='Nama Anak'
-          error='Wajib Diisi'
           value={namaAnak}
+          errors={messageError}
+          touched={messageError}
+          onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
           onChangeText={(text) => setNamaAnak(text)} />
       </View>
 
@@ -86,7 +110,7 @@ const FormDiagnosa = ({ onPress }) => {
       <Button
         red
         title='Daftar'
-        onPress={onPress} />
+        onPress={onPressDaftar} />
     </View>
   )
 }

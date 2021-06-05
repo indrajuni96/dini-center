@@ -1,11 +1,10 @@
 import React, { useState, useCallback } from 'react'
 import {
   View,
-  BackHandler,
-  ToastAndroid
+  BackHandler
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
-import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import {
@@ -14,12 +13,13 @@ import {
   FormRegister,
   FormDiagnosa
 } from '../../Components'
+import { clearFormRegister } from '../../Redux/Actions/Auth'
 
 const Register = ({ navigation: { goBack, navigate } }) => {
   const [isNext, setIsNext] = useState(false)
   const [securePassword, setSecurePassword] = useState(true);
 
-  const { isConnected } = useNetInfo()
+  const dispacth = useDispatch()
 
   useFocusEffect(useCallback(() => {
     backHandlerAction()
@@ -30,7 +30,7 @@ const Register = ({ navigation: { goBack, navigate } }) => {
       if (isNext) {
         setIsNext(false)
       } else {
-        goBack()
+        onBack()
       }
 
       return true
@@ -41,25 +41,22 @@ const Register = ({ navigation: { goBack, navigate } }) => {
     return () => backHandler.remove()
   }
 
-  const onPress = (routerName) => {
-    if (isConnected) {
-      navigate(routerName)
-    } else {
-      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
-    }
+  const onBack = () => {
+    goBack()
+    dispacth(clearFormRegister())
   }
 
   return (
     <View style={Styles.container}>
       <Header
         title='Daftar'
-        onPress={() => isNext ? setIsNext(false) : goBack()} />
+        onPress={() => isNext ? setIsNext(false) : onBack()} />
 
       <Space height={40} />
 
       {isNext ?
         <FormDiagnosa
-          onPress={() => onPress('HasilDiagnosa')}
+          navigate={navigate}
           onPressNext={() => setIsNext(false)} />
         : <FormRegister
           securePassword={securePassword}
