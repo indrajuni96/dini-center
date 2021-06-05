@@ -1,8 +1,15 @@
 import React from 'react'
+import {
+  View,
+  ScrollView,
+  ToastAndroid
+} from 'react-native'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNetInfo } from "@react-native-community/netinfo";
 
+import Styles from './Styles'
 import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
@@ -10,6 +17,8 @@ import { setFormRegister } from '../../../Redux/Actions/Auth'
 
 const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) => {
   const dispatch = useDispatch()
+
+  const { isConnected } = useNetInfo()
 
   const formRegister = useSelector((state) => state.AuthStore.formRegister)
 
@@ -41,72 +50,84 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
       .min(6, 'Minimum 6 karakter')
   })
 
-  const onSubmit = (values) => {
-    dispatch(setFormRegister(values))
-    onPressNext()
+  const onSubmit = (values, { resetForm }) => {
+    if (isConnected) {
+      dispatch(setFormRegister(values))
+      onPressNext()
+      // resetForm()
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-        <>
-          <Input
-            title='Nama Orang Tua'
-            value={values.namaOrangTua}
-            errors={errors.namaOrangTua}
-            touched={touched.namaOrangTua}
-            onBlur={handleBlur('namaOrangTua')}
-            onChangeText={handleChange('namaOrangTua')} />
+    <ScrollView
+      style={Styles.scrollView}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}>
+      <View style={Styles.contentForm}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}>
+          {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+            <>
+              <Input
+                title='Nama Orang Tua'
+                value={values.namaOrangTua}
+                errors={errors.namaOrangTua}
+                touched={touched.namaOrangTua}
+                onBlur={handleBlur('namaOrangTua')}
+                onChangeText={handleChange('namaOrangTua')} />
 
-          <Input
-            number
-            title='Nomor Telepon'
-            value={values.noTelepon}
-            errors={errors.noTelepon}
-            touched={touched.noTelepon}
-            onBlur={handleBlur('noTelepon')}
-            onChangeText={handleChange('noTelepon')} />
+              <Input
+                number
+                title='Nomor Telepon'
+                value={values.noTelepon}
+                errors={errors.noTelepon}
+                touched={touched.noTelepon}
+                onBlur={handleBlur('noTelepon')}
+                onChangeText={handleChange('noTelepon')} />
 
-          <Input
-            title='Alamat'
-            value={values.alamat}
-            errors={errors.alamat}
-            touched={touched.alamat}
-            onBlur={handleBlur('alamat')}
-            onChangeText={handleChange('alamat')} />
+              <Input
+                title='Alamat'
+                value={values.alamat}
+                errors={errors.alamat}
+                touched={touched.alamat}
+                onBlur={handleBlur('alamat')}
+                onChangeText={handleChange('alamat')} />
 
-          <Input
-            email
-            title='Email'
-            value={values.email}
-            errors={errors.email}
-            touched={touched.email}
-            onBlur={handleBlur('email')}
-            onChangeText={handleChange('email')} />
+              <Input
+                email
+                title='Email'
+                value={values.email}
+                errors={errors.email}
+                touched={touched.email}
+                onBlur={handleBlur('email')}
+                onChangeText={handleChange('email')} />
 
-          <Input
-            icon
-            securePassword={securePassword}
-            title='Password'
-            value={values.password}
-            errors={errors.password}
-            touched={touched.password}
-            onChangeText={handleChange('password')}
-            onBlur={handleBlur('password')}
-            onPress={onPressSecurePassword} />
+              <Input
+                icon
+                securePassword={securePassword}
+                title='Password'
+                value={values.password}
+                errors={errors.password}
+                touched={touched.password}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                onPress={onPressSecurePassword} />
 
-          <Space height={30} />
+              <Space height={30} />
 
-          <Button
-            red
-            title='Selanjutnya'
-            onPress={handleSubmit} />
-        </>
-      )}
-    </Formik>
+              <Button
+                red
+                title='Selanjutnya'
+                onPress={handleSubmit} />
+            </>
+          )}
+        </Formik>
+      </View>
+    </ScrollView>
   )
 }
 

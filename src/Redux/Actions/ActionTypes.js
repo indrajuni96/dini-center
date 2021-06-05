@@ -1,1 +1,6 @@
+export const IS_LOADING = 'IS_LOADING'
+
+export const LOGIN_USER = 'LOGIN_USER'
+export const REGISTER_USER = 'REGISTER_USER'
 export const SET_FORM_REGISTER = 'SET_FORM_REGISTER'
+export const CLEAR_FORM_REGISTER = 'CLEAR_FORM_REGISTER'
