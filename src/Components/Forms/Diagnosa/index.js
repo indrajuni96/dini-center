@@ -1,22 +1,68 @@
-import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useCallback } from 'react'
+import {
+  View,
+  FlatList
+} from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 
 import Styles from './Styles'
 import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
+import { DataDiagnosa } from '../../../Utils'
 
 const FormDiagnosa = ({ onPress }) => {
-  const [G1, setG1] = useState(false)
-  const [G2, setG2] = useState(false)
-  const [G3, setG3] = useState(false)
-  const [G4, setG4] = useState(false)
-
   const [namaAnak, setNamaAnak] = useState('')
+  const [dataDiagnosa, setDataDiagnosa] = useState([])
+
+  useFocusEffect(useCallback(() => {
+    loadData()
+  }, []))
+
+  const loadData = () => {
+    let data = []
+
+    for (let i = 0; i < DataDiagnosa.length; i++) {
+      data.push({
+        kode: DataDiagnosa[i].kode,
+        namaGejala: DataDiagnosa[i].namaGejala,
+        select: false
+      })
+    }
+
+    setDataDiagnosa(data)
+  }
+
+  const onPressIya = (selectKode) => {
+    let data = dataDiagnosa
+
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].kode == selectKode) {
+        data[i].select = true
+      }
+    }
+
+    setDataDiagnosa([...data])
+  }
+
+  const onPressTidak = (selectKode) => {
+    let newData
+    let datas = dataDiagnosa
+
+    const dataFind = datas.find(data => data.kode == selectKode)
+    dataFind.select = false
+
+    datas = datas.filter(data => data.kode !== selectKode)
+
+    newData = [...datas, dataFind]
+    newData.sort((a, b) => a.kode > b.kode ? 1 : -1)
+
+    setDataDiagnosa(newData)
+  }
 
   return (
-    <>
+    <View style={Styles.contentForm}>
       <View>
         <Input
           title='Nama Anak'
@@ -25,29 +71,15 @@ const FormDiagnosa = ({ onPress }) => {
           onChangeText={(text) => setNamaAnak(text)} />
       </View>
 
-      <CardDiagnosa
-        title='Menolak dipeluk ?'
-        select={G1}
-        onPressIya={() => setG1(true)}
-        onPressTidak={() => setG1(false)} />
-
-      <CardDiagnosa
-        title='Saat bermain bila didekati malah menjauh ?'
-        select={G2}
-        onPressIya={() => setG2(true)}
-        onPressTidak={() => setG2(false)} />
-
-      <CardDiagnosa
-        title='Bicara monoton seperti robot ?'
-        select={G3}
-        onPressIya={() => setG3(true)}
-        onPressTidak={() => setG3(false)} />
-
-      <CardDiagnosa
-        title='Kata-kata yang tidak dapat mengerti orang lain ?'
-        select={G4}
-        onPressIya={() => setG4(true)}
-        onPressTidak={() => setG4(false)} />
+      <FlatList
+        data={dataDiagnosa}
+        renderItem={({ item }) => (
+          <CardDiagnosa
+            select={item.select}
+            title={item.namaGejala}
+            onPressIya={() => onPressIya(item.kode)}
+            onPressTidak={() => onPressTidak(item.kode)} />)}
+        keyExtractor={item => item.kode} />
 
       <Space height={10} />
 
@@ -55,7 +87,7 @@ const FormDiagnosa = ({ onPress }) => {
         red
         title='Daftar'
         onPress={onPress} />
-    </>
+    </View>
   )
 }
 

@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react'
 import {
   View,
-  ScrollView,
-  BackHandler
+  BackHandler,
+  ToastAndroid
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import {
@@ -17,6 +18,8 @@ import {
 const Register = ({ navigation: { goBack, navigate } }) => {
   const [isNext, setIsNext] = useState(false)
   const [securePassword, setSecurePassword] = useState(true);
+
+  const { isConnected } = useNetInfo()
 
   useFocusEffect(useCallback(() => {
     backHandlerAction()
@@ -38,6 +41,14 @@ const Register = ({ navigation: { goBack, navigate } }) => {
     return () => backHandler.remove()
   }
 
+  const onPress = (routerName) => {
+    if (isConnected) {
+      navigate(routerName)
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
+  }
+
   return (
     <View style={Styles.container}>
       <Header
@@ -46,21 +57,14 @@ const Register = ({ navigation: { goBack, navigate } }) => {
 
       <Space height={40} />
 
-      <ScrollView
-        style={Styles.scrollView}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}>
-        <View style={Styles.contentForm}>
-          {isNext ?
-            <FormDiagnosa
-              onPress={() => navigate('HasilDiagnosa')}
-              onPressNext={() => setIsNext(false)} />
-            : <FormRegister
-              securePassword={securePassword}
-              onPressNext={() => setIsNext(true)}
-              onPressSecurePassword={() => setSecurePassword(state => !state)} />}
-        </View>
-      </ScrollView>
+      {isNext ?
+        <FormDiagnosa
+          onPress={() => onPress('HasilDiagnosa')}
+          onPressNext={() => setIsNext(false)} />
+        : <FormRegister
+          securePassword={securePassword}
+          onPressNext={() => setIsNext(true)}
+          onPressSecurePassword={() => setSecurePassword(state => !state)} />}
     </View>
   )
 }

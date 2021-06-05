@@ -1,6 +1,11 @@
 import React, { useState, useRef } from 'react'
-import { View, Text } from 'react-native'
+import {
+  View,
+  Text,
+  ToastAndroid
+} from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import {
@@ -13,6 +18,8 @@ import { DataCarousel } from '../../Utils'
 const LandingPage = ({ navigation: { navigate } }) => {
   const [activeSlide, setActiveSlide] = useState(0)
 
+  const { isConnected } = useNetInfo()
+
   let carouselRef = useRef()
 
   const _renderItem = ({ item, index }) => (
@@ -20,6 +27,14 @@ const LandingPage = ({ navigation: { navigate } }) => {
       svg={item.landingSvg}
       title={item.textTitle} />
   )
+
+  const onPress = (routerName) => {
+    if (isConnected) {
+      navigate(routerName)
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
+  }
 
   return (
     <View style={Styles.container}>
@@ -61,13 +76,13 @@ const LandingPage = ({ navigation: { navigate } }) => {
         <Button
           red
           title='Masuk'
-          onPress={() => navigate('Login')} />
+          onPress={() => onPress('Login')} />
 
         <Space height={10} />
 
         <Button
           title='Daftar'
-          onPress={() => navigate('Register')} />
+          onPress={() => onPress('Register')} />
       </View>
     </View>
   )

@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import {
   View,
   Keyboard,
-  ScrollView
+  ScrollView,
+  ToastAndroid
 } from 'react-native'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import {
@@ -22,6 +24,8 @@ const Login = ({ navigation: { goBack } }) => {
   const [securePassword, setSecurePassword] = useState(true);
 
   const dispatch = useDispatch()
+
+  const { isConnected } = useNetInfo()
 
   const { isLoading } = useSelector(state => ({
     isLoading: state.AuthStore.isLoading
@@ -46,7 +50,11 @@ const Login = ({ navigation: { goBack } }) => {
   const onSubmit = (values) => {
     Keyboard.dismiss()
 
-    dispatch(loginUser(values))
+    if (isConnected) {
+      dispatch(loginUser(values))
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
   }
 
   return (
