@@ -2,9 +2,10 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import Router from './Router'
-import { Store } from './Redux'
+import { Store, Persistor } from './Redux'
 
 export default function App() {
   useEffect(() => {
@@ -15,7 +16,9 @@ export default function App() {
 
   return (
     <Provider store={Store}>
-      <Router />
+      <PersistGate loading={null} persistor={Persistor}>
+        <Router />
+      </PersistGate>
     </Provider>
   )
 }
