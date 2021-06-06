@@ -27,11 +27,25 @@ const AuthReducer = (state = initialState, action) => {
     case Types.SET_FORM_REGISTER:
       return {
         ...state,
-        formRegister: action.data
+        formRegister: action.data.formRegister
+      }
+    case Types.REGISTER_USER:
+      return {
+        ...state,
+        userUID: action.data.userUID,
+        formRegister: action.data.formRegister
       }
     case Types.CLEAR_FORM_REGISTER:
       return {
         ...state,
+        formRegister: {}
+      }
+    case Types.LOGOUT_USER:
+      return {
+        ...state,
+        userUID: null,
+        isDiagnosa: false,
+        isLoading: false,
         formRegister: {}
       }
     default:

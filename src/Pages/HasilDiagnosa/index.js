@@ -14,7 +14,7 @@ import { setIsDiagnosa } from '../../Redux/Actions/Auth'
 const HasilDiagnosa = () => {
   const dispacth = useDispatch()
 
-  // const namaAnak = useSelector(state => state.AuthStore.form)
+  const namaAnak = useSelector(state => state.AuthStore.formRegister.namaAnak)
 
   return (
     <View style={Styles.container}>
@@ -28,7 +28,7 @@ const HasilDiagnosa = () => {
         <Input
           editable
           title='Nama Anak'
-          value='Nicolas' />
+          value={namaAnak} />
 
         <Input
           editable
