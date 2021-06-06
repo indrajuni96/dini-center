@@ -1,5 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Styles from './Styles'
 import {
@@ -8,8 +9,13 @@ import {
   Header,
   Button
 } from '../../Components'
+import { setIsDiagnosa } from '../../Redux/Actions/Auth'
 
-const HasilDiagnosa = ({ navigation: { navigate } }) => {
+const HasilDiagnosa = () => {
+  const dispacth = useDispatch()
+
+  // const namaAnak = useSelector(state => state.AuthStore.form)
+
   return (
     <View style={Styles.container}>
       <Header
@@ -34,7 +40,7 @@ const HasilDiagnosa = ({ navigation: { navigate } }) => {
         <Button
           red
           title='Dashboard'
-          onPress={() => console.log('dashboard')} />
+          onPress={() => dispacth(setIsDiagnosa(true))} />
       </View>
     </View>
   )

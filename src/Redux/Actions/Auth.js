@@ -16,6 +16,11 @@ const login = ({ userUID }) => ({
   }
 })
 
+export const setIsDiagnosa = (diagnosa) => ({
+  type: Types.SET_IS_DIAGNOSA,
+  isDiagnosa: diagnosa
+})
+
 export const setFormRegister = (data) => ({
   type: Types.SET_FORM_REGISTER,
   data
