@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   View,
+  Keyboard,
   ScrollView,
   ToastAndroid
 } from 'react-native'
@@ -50,11 +51,11 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
       .min(6, 'Minimum 6 karakter')
   })
 
-  const onSubmit = (values, { resetForm }) => {
+  const onSubmit = (values) => {
+    Keyboard.dismiss()
+
     if (isConnected) {
-      dispatch(setFormRegister(values))
-      onPressNext()
-      // resetForm()
+      dispatch(setFormRegister(values, onPressNext))
     } else {
       ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
     }

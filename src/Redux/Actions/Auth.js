@@ -9,6 +9,13 @@ const isLoading = (loading) => ({
   isLoading: loading
 })
 
+const checkEmail = (email) => ({
+  type: Types.CEK_EMAIL,
+  data: {
+    email
+  }
+})
+
 const login = ({ userUID }) => ({
   type: Types.LOGIN_USER,
   data: {
@@ -16,10 +23,48 @@ const login = ({ userUID }) => ({
   }
 })
 
-export const setFormRegister = (data) => ({
+const formRegister = ({ formRegister }) => ({
   type: Types.SET_FORM_REGISTER,
-  data
+  data: {
+    formRegister
+  }
 })
+
+const register = ({ userUID, formRegister }) => ({
+  type: Types.REGISTER_USER,
+  data: {
+    userUID,
+    formRegister
+  }
+})
+
+export const setIsDiagnosa = (diagnosa) => ({
+  type: Types.SET_IS_DIAGNOSA,
+  isDiagnosa: diagnosa
+})
+
+export const setFormRegister = (data, onPressNext) => async (dispatch) => {
+  try {
+    dispatch(isLoading(true))
+
+    const responseChekEmail = await firestore().collection('users')
+      .where('email', '==', data.email)
+      .get()
+
+    if (responseChekEmail.docs.length == 0) {
+      dispatch(formRegister({ formRegister: data }))
+      onPressNext()
+    } else {
+      ToastAndroid.show('Email sudah digunakan', ToastAndroid.SHORT);
+    }
+
+  } catch (error) {
+    console.log(error)
+    ToastAndroid.show(error, ToastAndroid.SHORT);
+  } finally {
+    dispatch(isLoading(false))
+  }
+}
 
 export const clearFormRegister = () => ({
   type: Types.CLEAR_FORM_REGISTER
@@ -53,6 +98,8 @@ export const registerUser = (data) => async (dispatch, getState) => {
 
     const formRegister = getState().AuthStore.formRegister
 
+    formRegister.namaAnak = data.namaAnak
+
     const responseRegister = await auth().createUserWithEmailAndPassword(formRegister.email.toLowerCase(), formRegister.password)
 
     await firestore().collection('users')
@@ -65,6 +112,10 @@ export const registerUser = (data) => async (dispatch, getState) => {
         namaAnak: data.namaAnak,
       })
 
+    dispatch(register({
+      userUID: responseRegister.user.uid,
+      formRegister
+    }))
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);
@@ -72,3 +123,7 @@ export const registerUser = (data) => async (dispatch, getState) => {
     dispatch(isLoading(false))
   }
 }
+
+export const logoutUser = () => ({
+  type: Types.LOGOUT_USER
+})

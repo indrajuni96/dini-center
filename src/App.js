@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import Router from './Router'
+import Routers from './Router'
 import { Store, Persistor } from './Redux'
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <Provider store={Store}>
       <PersistGate loading={null} persistor={Persistor}>
-        <Router />
+        <Routers />
       </PersistGate>
     </Provider>
   )

@@ -13,10 +13,15 @@ import {
   Button,
   CardLadingPage
 } from '../../Components'
-import { DataCarousel } from '../../Utils'
+import {
+  DataCarousel,
+  BackHandlerAction
+} from '../../Utils'
 
-const LandingPage = ({ navigation: { navigate } }) => {
+const LandingPage = ({ navigation: { navigate, isFocused } }) => {
   const [activeSlide, setActiveSlide] = useState(0)
+
+  BackHandlerAction(isFocused)
 
   const { isConnected } = useNetInfo()
 
