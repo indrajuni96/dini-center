@@ -9,6 +9,7 @@ import {
   HistoryStackScreen,
   ProfileStackScreen
 } from '../Stack'
+import { setTabBarVisible } from './Config'
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 
@@ -42,12 +43,14 @@ const TabApp = () => {
       <Tab.Screen
         name='Game'
         component={GameStackScreen}
-        options={{
+        options={({ route }) => ({
           tabBarLabel: 'Game',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="gamepad-variant" color={color} size={size} />
-          )
-        }} />
+          ),
+          tabBarVisible: setTabBarVisible(route)
+        })}
+      />
 
       <Tab.Screen
         name='History'

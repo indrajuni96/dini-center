@@ -10,7 +10,7 @@ const HistoryStackScreen = () => {
   return (
     <HistoryStack.Navigator
       headerMode='none'
-      creenOptions={screenOptions}>
+      screenOptions={screenOptions}>
       <HistoryStack.Screen name="History" component={History} />
     </HistoryStack.Navigator>
   )
