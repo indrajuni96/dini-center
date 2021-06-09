@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import {
-  HomeStackScreen,
-  GameStackScreen,
-  HistoryStackScreen,
-  ProfileStackScreen
-} from '../Stack'
+  Home,
+  Game,
+  History,
+  Profile
+} from '../../Pages'
 import { setTabBarVisible } from './Config'
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
@@ -32,7 +32,7 @@ const TabApp = () => {
       }}>
       <Tab.Screen
         name='Home'
-        component={HomeStackScreen}
+        component={Home}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -42,7 +42,7 @@ const TabApp = () => {
 
       <Tab.Screen
         name='Game'
-        component={GameStackScreen}
+        component={Game}
         options={({ route }) => ({
           tabBarLabel: 'Game',
           tabBarIcon: ({ color, size }) => (
@@ -54,7 +54,7 @@ const TabApp = () => {
 
       <Tab.Screen
         name='History'
-        component={HistoryStackScreen}
+        component={History}
         options={{
           tabBarLabel: 'History',
           tabBarIcon: ({ color, size }) => (
@@ -64,7 +64,7 @@ const TabApp = () => {
 
       <Tab.Screen
         name='Profile'
-        component={ProfileStackScreen}
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
