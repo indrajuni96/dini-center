@@ -6,8 +6,11 @@ import {
 } from 'react-native'
 
 import Styles from './Styles'
+import { BackHandlerAction } from '../../Utils'
 
-const Game = ({ navigation: { navigate } }) => {
+const Game = ({ navigation: { navigate, isFocused } }) => {
+  BackHandlerAction(isFocused)
+
   return (
     <View style={Styles.container}>
       <Text>Page Game</Text>

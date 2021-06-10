@@ -76,6 +76,7 @@ export const loginUser = (data) => async (dispatch) => {
 
     const responseLogin = await auth().signInWithEmailAndPassword(data.email.toLowerCase(), data.password)
 
+    dispatch(setIsDiagnosa(true))
     dispatch(login({ userUID: responseLogin.user.uid }))
   } catch (error) {
     console.log(error)

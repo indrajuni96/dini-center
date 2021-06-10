@@ -18,9 +18,10 @@ const RootStackScreen = () => {
 
   return (
     <RootStack.Navigator headerMode={false}>
-      {userUID == null && !isDiagnosa ?
-        <RootStack.Screen name="Auth" component={AuthStackScreen} />
-        : <RootStack.Screen name="App" component={AppStackScreen} />}
+      {userUID !== null && isDiagnosa
+        ? <RootStack.Screen name="App" component={AppStackScreen} />
+        : <RootStack.Screen name="Auth" component={AuthStackScreen} />
+      }
     </RootStack.Navigator>
   )
 }

@@ -9,9 +9,12 @@ import { useDispatch } from 'react-redux'
 import Styles from './Styles'
 import { BoySvg } from '../../Assets'
 import { logoutUser } from '../../Redux/Actions/Auth'
+import { BackHandlerAction } from '../../Utils'
 
-const Home = () => {
+const Home = ({ navigation: { isFocused } }) => {
   const dispatch = useDispatch()
+
+  BackHandlerAction(isFocused)
 
   return (
     <View style={Styles.container}>
