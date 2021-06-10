@@ -1,13 +1,14 @@
 import Space from './Space'
 import Input from './Inputs'
 import Header from './Headers'
+import Loading from './Loading'
 import Radio from './Buttons/Radio'
 import Button from './Buttons/Button'
-import Loading from './Loading'
 import CardDiagnosa from './Cards/Diagnosa'
 import CardLadingPage from './Cards/LandingPage'
 import FormRegister from './Forms/Register'
 import FormDiagnosa from './Forms/Diagnosa'
+import ListPengaturan from './Lists/Pengaturan'
 
 export {
   Space,
@@ -19,5 +20,6 @@ export {
   FormRegister,
   FormDiagnosa,
   CardDiagnosa,
-  CardLadingPage
+  CardLadingPage,
+  ListPengaturan
 }

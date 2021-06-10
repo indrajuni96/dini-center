@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import TabApp from './BottomTab'
-import { AuthStackScreen } from './Stack'
+import {
+  AuthStackScreen,
+  AppStackScreen
+} from './Stack'
 
 const RootStack = createStackNavigator()
 
@@ -16,11 +18,10 @@ const RootStackScreen = () => {
 
   return (
     <RootStack.Navigator headerMode={false}>
-      {userUID == null && !isDiagnosa ? (
-        <RootStack.Screen name="Auth" component={AuthStackScreen} />
-      ) : (
-        <RootStack.Screen name="App" component={TabApp} />
-      )}
+      {userUID !== null && isDiagnosa
+        ? <RootStack.Screen name="App" component={AppStackScreen} />
+        : <RootStack.Screen name="Auth" component={AuthStackScreen} />
+      }
     </RootStack.Navigator>
   )
 }

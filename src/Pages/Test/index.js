@@ -3,12 +3,12 @@ import { View, Text } from 'react-native'
 
 import Styles from './Styles'
 
-const Profile = ({ navigation: { goBack } }) => {
+const Test = () => {
   return (
     <View style={Styles.container}>
-      <Text>Page Profile</Text>
+      <Text>Page Test</Text>
     </View>
   )
 }
 
-export default Profile
+export default Test

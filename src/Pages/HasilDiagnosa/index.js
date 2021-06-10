@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -10,11 +10,21 @@ import {
   Button
 } from '../../Components'
 import { setIsDiagnosa } from '../../Redux/Actions/Auth'
+import { BackHandlerNotIsFocusedAction } from '../../Utils'
 
 const HasilDiagnosa = () => {
-  const dispacth = useDispatch()
+  const dispatch = useDispatch()
 
   const namaAnak = useSelector(state => state.AuthStore.formRegister.namaAnak)
+
+  BackHandlerNotIsFocusedAction()
+
+  useEffect(() => {
+    return () => {
+      console.log('will un mount')
+      // dispatch(setIsDiagnosa(true))
+    }
+  }, [])
 
   return (
     <View style={Styles.container}>
@@ -40,7 +50,7 @@ const HasilDiagnosa = () => {
         <Button
           red
           title='Dashboard'
-          onPress={() => dispacth(setIsDiagnosa(true))} />
+          onPress={() => dispatch(setIsDiagnosa(true))} />
       </View>
     </View>
   )

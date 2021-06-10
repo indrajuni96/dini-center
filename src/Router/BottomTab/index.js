@@ -4,11 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import {
-  HomeStackScreen,
-  GameStackScreen,
-  HistoryStackScreen,
-  ProfileStackScreen
-} from '../Stack'
+  Home,
+  Game,
+  History,
+  Pengaturan
+} from '../../Pages'
+import { setTabBarVisible } from './Config'
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 
@@ -31,7 +32,7 @@ const TabApp = () => {
       }}>
       <Tab.Screen
         name='Home'
-        component={HomeStackScreen}
+        component={Home}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -41,17 +42,19 @@ const TabApp = () => {
 
       <Tab.Screen
         name='Game'
-        component={GameStackScreen}
-        options={{
+        component={Game}
+        options={({ route }) => ({
           tabBarLabel: 'Game',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="gamepad-variant" color={color} size={size} />
-          )
-        }} />
+          ),
+          tabBarVisible: setTabBarVisible(route)
+        })}
+      />
 
       <Tab.Screen
         name='History'
-        component={HistoryStackScreen}
+        component={History}
         options={{
           tabBarLabel: 'History',
           tabBarIcon: ({ color, size }) => (
@@ -60,10 +63,10 @@ const TabApp = () => {
         }} />
 
       <Tab.Screen
-        name='Profile'
-        component={ProfileStackScreen}
+        name='Pengaturan'
+        component={Pengaturan}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'More',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="view-grid" color={color} size={size} />
           )

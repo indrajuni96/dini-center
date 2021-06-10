@@ -4,5 +4,6 @@ export const colors = {
   blue: '#0779E4',
   white: '#ffff',
   silver: '#9E9E9E',
-  silverLigth: '#E5E5E5'
+  silverLigth: '#E5E5E5',
+  silverLigthSmoke: '#f6f6f6'
 }
