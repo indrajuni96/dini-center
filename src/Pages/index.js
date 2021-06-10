@@ -5,6 +5,7 @@ import Login from './Login'
 import Profile from './Profile'
 import History from './History'
 import Register from './Register'
+import Pengaturan from './Pengaturan'
 import LandingPage from './LandingPage'
 import HasilDiagnosa from './HasilDiagnosa'
 
@@ -16,6 +17,7 @@ export {
   Profile,
   History,
   Register,
+  Pengaturan,
   LandingPage,
   HasilDiagnosa
 }

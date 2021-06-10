@@ -7,7 +7,7 @@ import {
   Home,
   Game,
   History,
-  Profile
+  Pengaturan
 } from '../../Pages'
 import { setTabBarVisible } from './Config'
 
@@ -63,10 +63,10 @@ const TabApp = () => {
         }} />
 
       <Tab.Screen
-        name='Profile'
-        component={Profile}
+        name='Pengaturan'
+        component={Pengaturan}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'More',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="view-grid" color={color} size={size} />
           )

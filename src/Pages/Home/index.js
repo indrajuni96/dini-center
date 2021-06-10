@@ -1,19 +1,14 @@
 import React from 'react'
 import {
   View,
-  Text,
-  Pressable
+  Text
 } from 'react-native'
-import { useDispatch } from 'react-redux'
 
 import Styles from './Styles'
 import { BoySvg } from '../../Assets'
-import { logoutUser } from '../../Redux/Actions/Auth'
 import { BackHandlerAction } from '../../Utils'
 
 const Home = ({ navigation: { isFocused } }) => {
-  const dispatch = useDispatch()
-
   BackHandlerAction(isFocused)
 
   return (
@@ -21,11 +16,6 @@ const Home = ({ navigation: { isFocused } }) => {
       <Text>Page Home</Text>
 
       <BoySvg width={100} height={100} />
-
-      <Pressable onPress={() => dispatch(logoutUser())}>
-        <Text>Logout</Text>
-      </Pressable>
-
     </View>
   )
 }
