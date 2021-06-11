@@ -2,7 +2,8 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import {
-  Test
+  Test,
+  Profile
 } from '../../Pages'
 import TabApp from '../BottomTab'
 import { screenOptions } from './Config'
@@ -15,6 +16,7 @@ const AppStackScreen = () => {
       headerMode='none'
       screenOptions={screenOptions}>
       <AppStack.Screen name="TabApp" component={TabApp} />
+      <AppStack.Screen name="Profile" component={Profile} />
       <AppStack.Screen name="Test" component={Test} />
     </AppStack.Navigator>
   )

@@ -10,7 +10,7 @@ import {
 import { BackHandlerAction } from '../../Utils'
 import { logoutUser } from '../../Redux/Actions/Auth'
 
-const Pengaturan = ({ navigation: { isFocused } }) => {
+const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
   BackHandlerAction(isFocused)
 
   const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const Pengaturan = ({ navigation: { isFocused } }) => {
         <ListPengaturan
           isOnPress
           title='Profile'
-          onPress={() => console.log('Profile')} />
+          onPress={() => navigate('Profile')} />
 
         <Space height={2} />
 
