@@ -9,6 +9,7 @@ import {
   History,
   Pengaturan
 } from '../../Pages'
+import { colors } from '../../Utils'
 import { setTabBarVisible } from './Config'
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
@@ -23,7 +24,8 @@ const TabApp = () => {
         activeTintColor: '#FF2768',
         style: {
           elevation: 0,
-          borderTopWidth: 0,
+          // borderTopWidth: 0,
+          borderTopColor: colors.silverLigth,
           height: SCREEN_HEIGHT * 0.08,
           paddingTop: SCREEN_HEIGHT * 0.008,
           paddingBottom: SCREEN_HEIGHT * 0.008,
