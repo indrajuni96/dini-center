@@ -8,9 +8,15 @@ const Styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingVertical: SCREEN_HEIGHT * 0.02,
+    paddingTop: SCREEN_HEIGHT * 0.02,
     paddingHorizontal: SCREEN_WIDTH * 0.03,
-  }
+  },
+  scrollView: {
+    flex: 1
+  },
+  contentForm: {
+    paddingHorizontal: SCREEN_WIDTH * 0.03,
+  },
 })
 
 export default Styles

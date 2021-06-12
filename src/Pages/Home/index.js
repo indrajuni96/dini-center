@@ -4,6 +4,7 @@ import {
   Text,
   Pressable
 } from 'react-native'
+import { useSelector } from 'react-redux'
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons'
 
@@ -22,6 +23,8 @@ import {
 
 const Home = ({ navigation: { isFocused, navigate } }) => {
   BackHandlerAction(isFocused)
+
+  const user = useSelector(state => state.AuthStore.user)
 
   return (
     <View style={Styles.container}>
@@ -48,7 +51,7 @@ const Home = ({ navigation: { isFocused, navigate } }) => {
         </View>
 
         <Text style={Styles.textName}>
-          Nicolas
+          {user.namaAnak || ''}
         </Text>
 
         <Space height={40} />
