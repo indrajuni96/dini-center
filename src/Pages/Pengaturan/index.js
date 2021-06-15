@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import Styles from './Styles'
 import {
   Space,
+  Header,
   ListPengaturan
 } from '../../Components'
 import { BackHandlerAction } from '../../Utils'
@@ -17,11 +18,9 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
 
   return (
     <View style={Styles.container}>
-      <View style={Styles.contentHeader}>
-        <Text style={Styles.textHeader}>
-          Pengaturan
-        </Text>
-      </View>
+      <Header
+        isDefault
+        title='History' />
 
       <Space height={40} />
 

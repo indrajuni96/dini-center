@@ -16,10 +16,11 @@ const checkEmail = (email) => ({
   }
 })
 
-const login = ({ userUID }) => ({
+const login = ({ userUID, user }) => ({
   type: Types.LOGIN_USER,
   data: {
-    userUID
+    userUID,
+    user
   }
 })
 
@@ -75,9 +76,13 @@ export const loginUser = (data) => async (dispatch) => {
     dispatch(isLoading(true))
 
     const responseLogin = await auth().signInWithEmailAndPassword(data.email.toLowerCase(), data.password)
+    const responseUser = await firestore().collection('users').doc(responseLogin.user.uid).get()
 
     dispatch(setIsDiagnosa(true))
-    dispatch(login({ userUID: responseLogin.user.uid }))
+    dispatch(login({
+      userUID: responseLogin.user.uid,
+      user: responseUser.data()
+    }))
   } catch (error) {
     console.log(error)
 

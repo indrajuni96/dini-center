@@ -1,15 +1,55 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import {
+  View,
+  ScrollView
+} from 'react-native'
 
 import Styles from './Styles'
 import { BackHandlerAction } from '../../Utils'
+import {
+  Space,
+  Header,
+  ListHistory
+} from '../../Components'
 
 const History = ({ navigation: { isFocused } }) => {
   BackHandlerAction(isFocused)
 
   return (
     <View style={Styles.container}>
-      <Text>Page History</Text>
+      <Header
+        isDefault
+        title='History' />
+
+      <Space height={40} />
+
+      <ScrollView
+        style={Styles.scrollView}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}>
+        <View style={Styles.contentForm}>
+          <ListHistory
+            disabled
+            title='ayah'
+            status='berhasil menggucapkan' />
+
+          <ListHistory
+            disabled
+            title='ibu'
+            status='berhasil menggucapkan' />
+
+          <ListHistory
+            disabled
+            title='kakak'
+            status='tidak berhasil menggucapkan' />
+
+          <ListHistory
+            disabled
+            title='kakak'
+            status='tidak berhasil menggucapkan' />
+
+        </View>
+      </ScrollView>
     </View>
   )
 }

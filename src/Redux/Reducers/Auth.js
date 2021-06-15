@@ -4,6 +4,7 @@ const initialState = {
   userUID: null,
   isDiagnosa: false,
   isLoading: false,
+  user: {},
   formRegister: {}
 }
 
@@ -22,7 +23,8 @@ const AuthReducer = (state = initialState, action) => {
     case Types.LOGIN_USER:
       return {
         ...state,
-        userUID: action.data.userUID
+        userUID: action.data.userUID,
+        user: action.data.user
       }
     case Types.SET_FORM_REGISTER:
       return {

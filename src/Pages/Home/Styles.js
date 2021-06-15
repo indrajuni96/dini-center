@@ -57,11 +57,30 @@ const Styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  textDate: {
+  contentHistory: {
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    borderColor: colors.silverLigth,
+    paddingTop: SCREEN_HEIGHT * 0.03,
+    paddingHorizontal: SCREEN_WIDTH * 0.05,
+  },
+  historyHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textRegular15: {
     color: colors.silver,
     fontSize: SCREEN_HEIGHT * 0.015,
     fontFamily: 'Poppins-Regular'
-  }
+  },
+  textSemiBold18: {
+    color: colors.black,
+    fontSize: SCREEN_HEIGHT * 0.018,
+    fontFamily: 'Poppins-SemiBold'
+  },
 })
 
 export default Styles

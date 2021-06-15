@@ -8,6 +8,7 @@ import CardDiagnosa from './Cards/Diagnosa'
 import CardLadingPage from './Cards/LandingPage'
 import FormRegister from './Forms/Register'
 import FormDiagnosa from './Forms/Diagnosa'
+import ListHistory from './Lists/History'
 import ListPengaturan from './Lists/Pengaturan'
 
 export {
@@ -21,5 +22,6 @@ export {
   FormDiagnosa,
   CardDiagnosa,
   CardLadingPage,
+  ListHistory,
   ListPengaturan
 }
