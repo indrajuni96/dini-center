@@ -32,27 +32,27 @@ const Profile = ({ navigation: { goBack } }) => {
           <Input
             editable
             title='Nama Anak'
-            value={user.namaAnak || ''} />
+            value={user ? user.namaAnak : ''} />
 
           <Input
             editable
             title='Nama Orang Tua'
-            value={user.namaOrangTua || ''} />
+            value={user ? user.namaOrangTua : ''} />
 
           <Input
             editable
             title='Nomor Telepon'
-            value={user.noTelepon || ''} />
+            value={user ? user.noTelepon : ''} />
 
           <Input
             editable
             title='Alamat'
-            value={user.alamat || ''} />
+            value={user ? user.alamat : ''} />
 
           <Input
             editable
             title='Email'
-            value={user.email || ''} />
+            value={user ? user.email : ''} />
 
           <Input
             editable

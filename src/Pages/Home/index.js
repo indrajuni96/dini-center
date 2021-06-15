@@ -51,7 +51,7 @@ const Home = ({ navigation: { isFocused, navigate } }) => {
         </View>
 
         <Text style={Styles.textName}>
-          {user.namaAnak || ''}
+          {user ? user.namaAnak : ''}
         </Text>
 
         <Space height={40} />
@@ -75,7 +75,7 @@ const Home = ({ navigation: { isFocused, navigate } }) => {
             History
           </Text>
 
-          <Pressable onPress={() => console.log('lihat semua')}>
+          <Pressable onPress={() => navigate('History')}>
             <Text style={Styles.textRegular15}>
               lihat semua
             </Text>

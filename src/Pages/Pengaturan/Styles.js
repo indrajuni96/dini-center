@@ -10,15 +10,6 @@ const Styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingTop: SCREEN_HEIGHT * 0.02
   },
-  contentHeader: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textHeader: {
-    textAlign: 'center',
-    fontSize: SCREEN_HEIGHT * 0.025,
-    fontFamily: 'Poppins-SemiBold'
-  },
   contentList: {
     flex: 1,
     backgroundColor: colors.silverLigthSmoke
