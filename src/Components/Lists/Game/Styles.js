@@ -18,6 +18,9 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.2,
   },
+  contentText: {
+    justifyContent: 'center',
+  },
   textRegular15: {
     color: colors.silver,
     fontSize: SCREEN_HEIGHT * 0.015,

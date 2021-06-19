@@ -27,7 +27,7 @@ const History = ({ navigation: { isFocused } }) => {
         style={Styles.scrollView}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}>
-        <View style={Styles.contentForm}>
+        <View>
           <ListHistory
             disabled
             title='ayah'

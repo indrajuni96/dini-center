@@ -10,6 +10,11 @@ const Styles = StyleSheet.create({
   },
   contentForm: {
     paddingHorizontal: SCREEN_WIDTH * 0.03,
+  },
+  contentLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
