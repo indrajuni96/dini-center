@@ -1,15 +1,45 @@
 {
   "project_info": {
     "project_number": "422521113645",
+    "firebase_url": "https://dinicenter1-default-rtdb.firebaseio.com",
     "project_id": "dinicenter1",
     "storage_bucket": "dinicenter1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:422521113645:android:22ef34049a99aa69377ca4",
+        "mobilesdk_app_id": "1:422521113645:android:c144cec936e69f01377ca4",
         "android_client_info": {
           "package_name": "com.dinicenter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422521113645-4fc5fhihc42d513p85rclcbehrfqmn23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy47ZfzsybeAW_gTf1y_TRJSf2R3whG6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422521113645-4fc5fhihc42d513p85rclcbehrfqmn23.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422521113645:android:7fde04c301f39f81377ca4",
+        "android_client_info": {
+          "package_name": "com.testfirebase"
         }
       },
       "oauth_client": [

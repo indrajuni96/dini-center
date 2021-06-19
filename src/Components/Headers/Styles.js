@@ -15,7 +15,7 @@ const Styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: SCREEN_HEIGHT * 0.025,
+    fontSize: SCREEN_HEIGHT * 0.028,
     fontFamily: 'Poppins-SemiBold'
   },
 })

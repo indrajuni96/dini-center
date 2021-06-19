@@ -21,13 +21,13 @@ const History = ({ navigation: { isFocused } }) => {
         isDefault
         title='History' />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <ScrollView
         style={Styles.scrollView}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}>
-        <View style={Styles.contentForm}>
+        <View>
           <ListHistory
             disabled
             title='ayah'

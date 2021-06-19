@@ -18,10 +18,8 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.2,
   },
-  textRegular18: {
-    color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.018,
-    fontFamily: 'Poppins-Regular'
+  contentText: {
+    justifyContent: 'center',
   },
   textSemiBold15: {
     color: colors.black,

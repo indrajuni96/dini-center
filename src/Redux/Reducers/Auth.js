@@ -35,7 +35,7 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         userUID: action.data.userUID,
-        formRegister: action.data.formRegister
+        user: action.data.user
       }
     case Types.CLEAR_FORM_REGISTER:
       return {

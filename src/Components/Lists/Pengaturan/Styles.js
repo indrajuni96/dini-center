@@ -15,7 +15,7 @@ const Styles = StyleSheet.create({
   },
   text: {
     color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.02,
+    fontSize: SCREEN_HEIGHT * 0.023,
     fontFamily: 'Poppins-Regular',
   }
 })

@@ -8,7 +8,8 @@ import Styles from './Styles'
 import { BackHandlerAction } from '../../Utils'
 import {
   Space,
-  Header
+  Header,
+  ListGame
 } from '../../Components'
 
 const Game = ({ navigation: { navigate, goBack, isFocused } }) => {
@@ -20,15 +21,32 @@ const Game = ({ navigation: { navigate, goBack, isFocused } }) => {
         isDefault
         title='Game' />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <ScrollView
         style={Styles.scrollView}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}>
-        <View style={Styles.contentForm}>
+        <View>
+          <ListGame
+            disabled
+            title='ayah' />
 
+          <ListGame
+            disabled
+            title='ibu' />
 
+          <ListGame
+            disabled
+            title='kakak' />
+
+          <ListGame
+            disabled
+            title='kakek' />
+
+          <ListGame
+            disabled
+            title='kucing' />
         </View>
       </ScrollView>
     </View>

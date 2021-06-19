@@ -1,19 +1,12 @@
 import { ToastAndroid } from 'react-native'
 import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
+import database from '@react-native-firebase/database'
 
 import * as Types from './ActionTypes'
 
 const isLoading = (loading) => ({
   type: Types.IS_LOADING,
   isLoading: loading
-})
-
-const checkEmail = (email) => ({
-  type: Types.CEK_EMAIL,
-  data: {
-    email
-  }
 })
 
 const login = ({ userUID, user }) => ({
@@ -31,11 +24,11 @@ const formRegister = ({ formRegister }) => ({
   }
 })
 
-const register = ({ userUID, formRegister }) => ({
+const register = ({ userUID, user }) => ({
   type: Types.REGISTER_USER,
   data: {
     userUID,
-    formRegister
+    user
   }
 })
 
@@ -48,17 +41,23 @@ export const setFormRegister = (data, onPressNext) => async (dispatch) => {
   try {
     dispatch(isLoading(true))
 
-    const responseChekEmail = await firestore().collection('users')
-      .where('email', '==', data.email)
-      .get()
+    let emails = []
+    const responseCheckEmail = await database()
+      .ref('/users')
+      .once('value')
 
-    if (responseChekEmail.docs.length == 0) {
+    const datas = responseCheckEmail.val()
+
+    for (const key in responseCheckEmail.val()) {
+      emails.push(datas[key].email.toLowerCase())
+    }
+
+    if (!emails.includes(data.email.toLowerCase())) {
       dispatch(formRegister({ formRegister: data }))
       onPressNext()
     } else {
       ToastAndroid.show('Email sudah digunakan', ToastAndroid.SHORT);
     }
-
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);
@@ -76,12 +75,15 @@ export const loginUser = (data) => async (dispatch) => {
     dispatch(isLoading(true))
 
     const responseLogin = await auth().signInWithEmailAndPassword(data.email.toLowerCase(), data.password)
-    const responseUser = await firestore().collection('users').doc(responseLogin.user.uid).get()
+
+    const responseUser = await database()
+      .ref(`/users/${responseLogin.user.uid}`)
+      .once('value')
 
     dispatch(setIsDiagnosa(true))
     dispatch(login({
       userUID: responseLogin.user.uid,
-      user: responseUser.data()
+      user: responseUser.val()
     }))
   } catch (error) {
     console.log(error)
@@ -108,8 +110,8 @@ export const registerUser = (data) => async (dispatch, getState) => {
 
     const responseRegister = await auth().createUserWithEmailAndPassword(formRegister.email.toLowerCase(), formRegister.password)
 
-    await firestore().collection('users')
-      .doc(responseRegister.user.uid)
+    await database()
+      .ref(`/users/${responseRegister.user.uid}`)
       .set({
         namaOrangTua: formRegister.namaOrangTua,
         noTelepon: formRegister.noTelepon,
@@ -120,8 +122,9 @@ export const registerUser = (data) => async (dispatch, getState) => {
 
     dispatch(register({
       userUID: responseRegister.user.uid,
-      formRegister
+      user: formRegister
     }))
+    dispatch(clearFormRegister())
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);

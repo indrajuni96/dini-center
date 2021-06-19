@@ -9,7 +9,7 @@ import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import Styles from './Styles'
 import { colors } from '../../../Utils'
 
-const ListHistory = ({ disabled, title, status, onPress }) => {
+const ListGame = ({ disabled, title, onPress }) => {
   return (
     <Pressable
       disabled={disabled}
@@ -18,21 +18,17 @@ const ListHistory = ({ disabled, title, status, onPress }) => {
       <View style={Styles.contentIcon}>
         <AntDesign
           size={28}
-          color={colors.silver}
-          name="playcircleo" />
+          color={colors.black}
+          name="play" />
       </View>
 
-      <View>
+      <View style={Styles.contentText}>
         <Text style={Styles.textSemiBold15}>
           {title}
-        </Text>
-
-        <Text style={Styles.textRegular18}>
-          {status}
         </Text>
       </View>
     </Pressable>
   )
 }
 
-export default ListHistory
+export default ListGame

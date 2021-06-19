@@ -52,7 +52,7 @@ const Register = ({ navigation: { goBack, navigate } }) => {
         title='Daftar'
         onPress={() => isNext ? setIsNext(false) : onBack()} />
 
-      <Space height={40} />
+      <Space height={30} />
 
       {isNext ?
         <FormDiagnosa

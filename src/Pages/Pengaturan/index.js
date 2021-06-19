@@ -20,9 +20,9 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
     <View style={Styles.container}>
       <Header
         isDefault
-        title='History' />
+        title='Pengaturan' />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <View style={Styles.contentList}>
         <Space height={10} />

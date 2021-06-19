@@ -17,7 +17,7 @@ const Styles = StyleSheet.create({
   text: {
     color: colors.white,
     textAlign: 'center',
-    fontSize: SCREEN_HEIGHT * 0.02,
+    fontSize: SCREEN_HEIGHT * 0.024,
     fontFamily: 'Poppins-SemiBold',
   },
 })

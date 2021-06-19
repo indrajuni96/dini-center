@@ -32,7 +32,7 @@ const HasilDiagnosa = () => {
         isDefault
         title='Hasil Diagnosa' />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <View style={Styles.contentForm}>
         <Input

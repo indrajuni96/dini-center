@@ -2,9 +2,11 @@ import React, { useState, useCallback } from 'react'
 import {
   View,
   FlatList,
-  ToastAndroid
+  ToastAndroid,
+  ActivityIndicator
 } from 'react-native'
 import { useDispatch } from 'react-redux'
+import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
 import { useNetInfo } from "@react-native-community/netinfo";
 
@@ -13,10 +15,10 @@ import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
-import { DataDiagnosa } from '../../../Utils'
 import { registerUser } from '../../../Redux/Actions/Auth'
 
 const FormDiagnosa = ({ navigate }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [namaAnak, setNamaAnak] = useState('')
   const [messageError, setMessageError] = useState('')
   const [dataDiagnosa, setDataDiagnosa] = useState([])
@@ -29,18 +31,34 @@ const FormDiagnosa = ({ navigate }) => {
     loadData()
   }, []))
 
-  const loadData = () => {
-    let data = []
+  const loadData = async () => {
+    try {
+      setIsLoading(true)
 
-    for (let i = 0; i < DataDiagnosa.length; i++) {
-      data.push({
-        kode: DataDiagnosa[i].kode,
-        namaGejala: DataDiagnosa[i].namaGejala,
-        select: false
-      })
+      let data = []
+      const responseGejala = await database()
+        .ref('/gejala')
+        .orderByValue('kode')
+        .once('value')
+
+      const datas = responseGejala.val()
+
+      for (const key in responseGejala.val()) {
+        data.push({
+          kode: datas[key].kode,
+          namaGejala: datas[key].namaGejala,
+          select: false
+        })
+      }
+
+      data.sort((a, b) => (a.kode > b.kode) ? 1 : -1)
+
+      setDataDiagnosa(data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
     }
-
-    setDataDiagnosa(data)
   }
 
   const onPressIya = (selectKode) => {
@@ -84,34 +102,39 @@ const FormDiagnosa = ({ navigate }) => {
   }
 
   return (
-    <View style={Styles.contentForm}>
-      <View>
-        <Input
-          title='Nama Anak'
-          value={namaAnak}
-          errors={messageError}
-          touched={messageError}
-          onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
-          onChangeText={(text) => setNamaAnak(text)} />
+    isLoading ?
+      <View style={Styles.contentLoading}>
+        <ActivityIndicator size="large" color='#FF2768' />
       </View>
+      :
+      <View style={Styles.contentForm}>
+        <View>
+          <Input
+            title='Nama Anak'
+            value={namaAnak}
+            errors={messageError}
+            touched={messageError}
+            onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
+            onChangeText={(text) => setNamaAnak(text)} />
+        </View>
 
-      <FlatList
-        data={dataDiagnosa}
-        renderItem={({ item }) => (
-          <CardDiagnosa
-            select={item.select}
-            title={item.namaGejala}
-            onPressIya={() => onPressIya(item.kode)}
-            onPressTidak={() => onPressTidak(item.kode)} />)}
-        keyExtractor={item => item.kode} />
+        <FlatList
+          data={dataDiagnosa}
+          renderItem={({ item }) => (
+            <CardDiagnosa
+              select={item.select}
+              title={item.namaGejala}
+              onPressIya={() => onPressIya(item.kode)}
+              onPressTidak={() => onPressTidak(item.kode)} />)}
+          keyExtractor={item => item.kode} />
 
-      <Space height={10} />
+        <Space height={10} />
 
-      <Button
-        red
-        title='Daftar'
-        onPress={onPressDaftar} />
-    </View>
+        <Button
+          red
+          title='Daftar'
+          onPress={onPressDaftar} />
+      </View>
   )
 }
 

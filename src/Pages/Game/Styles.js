@@ -9,13 +9,9 @@ const Styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingTop: SCREEN_HEIGHT * 0.02,
-    paddingHorizontal: SCREEN_WIDTH * 0.03,
   },
   scrollView: {
     flex: 1
-  },
-  contentForm: {
-    paddingHorizontal: SCREEN_WIDTH * 0.03,
   },
 })
 

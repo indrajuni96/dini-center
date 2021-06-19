@@ -22,7 +22,7 @@ const Profile = ({ navigation: { goBack } }) => {
         title='Profile'
         onPress={() => goBack()} />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <ScrollView
         style={Styles.scrollView}
@@ -60,7 +60,7 @@ const Profile = ({ navigation: { goBack } }) => {
             title='Password'
             value='******' />
 
-          <Space height={30} />
+          {/* <Space height={1} /> */}
 
           <Button
             red
