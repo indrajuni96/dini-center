@@ -5,6 +5,7 @@ import {
   ToastAndroid
 } from 'react-native'
 import { useDispatch } from 'react-redux'
+import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
 import { useNetInfo } from "@react-native-community/netinfo";
 
@@ -13,10 +14,10 @@ import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
-import { DataDiagnosa } from '../../../Utils'
 import { registerUser } from '../../../Redux/Actions/Auth'
 
 const FormDiagnosa = ({ navigate }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [namaAnak, setNamaAnak] = useState('')
   const [messageError, setMessageError] = useState('')
   const [dataDiagnosa, setDataDiagnosa] = useState([])
@@ -29,16 +30,24 @@ const FormDiagnosa = ({ navigate }) => {
     loadData()
   }, []))
 
-  const loadData = () => {
+  const loadData = async () => {
     let data = []
+    const responseGejala = await database()
+      .ref('/gejala')
+      .orderByValue('kode')
+      .once('value')
 
-    for (let i = 0; i < DataDiagnosa.length; i++) {
+    const datas = responseGejala.val()
+
+    for (const key in responseGejala.val()) {
       data.push({
-        kode: DataDiagnosa[i].kode,
-        namaGejala: DataDiagnosa[i].namaGejala,
+        kode: datas[key].kode,
+        namaGejala: datas[key].namaGejala,
         select: false
       })
     }
+
+    data.sort((a, b) => (a.kode > b.kode) ? 1 : -1)
 
     setDataDiagnosa(data)
   }
