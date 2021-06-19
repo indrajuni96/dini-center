@@ -21,14 +21,9 @@ const Styles = StyleSheet.create({
   contentText: {
     justifyContent: 'center',
   },
-  textRegular15: {
-    color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.015,
-    fontFamily: 'Poppins-Regular'
-  },
   textSemiBold15: {
     color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.017,
+    fontSize: SCREEN_HEIGHT * 0.022,
     fontFamily: 'Poppins-SemiBold'
   },
 })

@@ -10,7 +10,7 @@ const Styles = StyleSheet.create({
   },
   text: {
     color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.02,
+    fontSize: SCREEN_HEIGHT * 0.022,
     fontFamily: 'Poppins-Regular'
   },
   wrapperRadio: {

@@ -18,14 +18,14 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.2,
   },
-  textRegular15: {
+  textRegular18: {
     color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.015,
+    fontSize: SCREEN_HEIGHT * 0.018,
     fontFamily: 'Poppins-Regular'
   },
   textSemiBold15: {
     color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.017,
+    fontSize: SCREEN_HEIGHT * 0.022,
     fontFamily: 'Poppins-SemiBold'
   },
 })

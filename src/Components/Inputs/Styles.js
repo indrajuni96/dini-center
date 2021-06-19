@@ -30,7 +30,7 @@ const Styles = StyleSheet.create({
   },
   textError: {
     color: colors.red,
-    fontSize: SCREEN_HEIGHT * 0.014,
+    fontSize: SCREEN_HEIGHT * 0.016,
     fontFamily: 'Poppins-Regular'
   },
 })

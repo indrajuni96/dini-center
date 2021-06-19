@@ -57,7 +57,9 @@ const Home = ({ navigation: { isFocused, navigate } }) => {
         <Space height={40} />
 
         <View style={Styles.contentDate}>
-          <MaterialIcons name="access-time" size={15} color={colors.silver} />
+          <View style={{ marginBottom: 3 }}>
+            <MaterialIcons name="access-time" size={15} color={colors.silver} />
+          </View>
 
           <Space width={5} />
 

@@ -27,7 +27,7 @@ const ListHistory = ({ disabled, title, status, onPress }) => {
           {title}
         </Text>
 
-        <Text style={Styles.textRegular15}>
+        <Text style={Styles.textRegular18}>
           {status}
         </Text>
       </View>

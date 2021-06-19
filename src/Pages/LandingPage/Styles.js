@@ -18,12 +18,12 @@ const Styles = StyleSheet.create({
   },
   textDini: {
     color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.03,
+    fontSize: SCREEN_HEIGHT * 0.035,
     fontFamily: 'Poppins-Bold'
   },
   textCenter: {
     color: colors.red,
-    fontSize: SCREEN_HEIGHT * 0.03,
+    fontSize: SCREEN_HEIGHT * 0.035,
     fontFamily: 'Poppins-Bold'
   },
   wrapperCarousel: {

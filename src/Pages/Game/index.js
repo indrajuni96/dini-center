@@ -21,7 +21,7 @@ const Game = ({ navigation: { navigate, goBack, isFocused } }) => {
         isDefault
         title='Game' />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <ScrollView
         style={Styles.scrollView}

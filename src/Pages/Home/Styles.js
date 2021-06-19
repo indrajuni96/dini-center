@@ -22,12 +22,12 @@ const Styles = StyleSheet.create({
   },
   textDini: {
     color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.025,
+    fontSize: SCREEN_HEIGHT * 0.033,
     fontFamily: 'Poppins-Bold'
   },
   textCenter: {
     color: colors.red,
-    fontSize: SCREEN_HEIGHT * 0.025,
+    fontSize: SCREEN_HEIGHT * 0.033,
     fontFamily: 'Poppins-Bold'
   },
   contentCard: {
@@ -44,12 +44,12 @@ const Styles = StyleSheet.create({
   },
   textSelamat: {
     color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.02,
+    fontSize: SCREEN_HEIGHT * 0.023,
     fontFamily: 'Poppins-SemiBold'
   },
   textName: {
     color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.02,
+    fontSize: SCREEN_HEIGHT * 0.023,
     fontFamily: 'Poppins-Regular'
   },
   contentDate: {
@@ -73,12 +73,12 @@ const Styles = StyleSheet.create({
   },
   textRegular15: {
     color: colors.silver,
-    fontSize: SCREEN_HEIGHT * 0.015,
+    fontSize: SCREEN_HEIGHT * 0.018,
     fontFamily: 'Poppins-Regular'
   },
   textSemiBold18: {
     color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.018,
+    fontSize: SCREEN_HEIGHT * 0.022,
     fontFamily: 'Poppins-SemiBold'
   },
 })

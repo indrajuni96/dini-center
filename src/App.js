@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react'
+import { Text } from 'react-native'
 import { Provider } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -12,6 +13,9 @@ export default function App() {
     setTimeout(() => {
       SplashScreen.hide()
     }, 2000)
+
+    Text.defaultProps = Text.defaultProps || {};
+    Text.defaultProps.allowFontScaling = false;
   }, [])
 
   return (

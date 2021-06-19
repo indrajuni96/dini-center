@@ -21,7 +21,7 @@ const History = ({ navigation: { isFocused } }) => {
         isDefault
         title='History' />
 
-      <Space height={40} />
+      <Space height={30} />
 
       <ScrollView
         style={Styles.scrollView}
