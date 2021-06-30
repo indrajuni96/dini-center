@@ -74,6 +74,7 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
             <>
               <Input
+                isHeight
                 title='Nama Orang Tua'
                 value={values.namaOrangTua}
                 errors={errors.namaOrangTua}
@@ -82,6 +83,7 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
                 onChangeText={handleChange('namaOrangTua')} />
 
               <Input
+                isHeight
                 number
                 title='Nomor Telepon'
                 value={values.noTelepon}
@@ -91,6 +93,7 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
                 onChangeText={handleChange('noTelepon')} />
 
               <Input
+                isHeight
                 title='Alamat'
                 value={values.alamat}
                 errors={errors.alamat}
@@ -99,6 +102,7 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
                 onChangeText={handleChange('alamat')} />
 
               <Input
+                isHeight
                 email
                 title='Email'
                 value={values.email}
@@ -108,6 +112,7 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
                 onChangeText={handleChange('email')} />
 
               <Input
+                isHeight
                 icon
                 securePassword={securePassword}
                 title='Password'

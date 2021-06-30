@@ -30,37 +30,41 @@ const Profile = ({ navigation: { goBack } }) => {
         showsVerticalScrollIndicator={false}>
         <View style={Styles.contentForm}>
           <Input
+            isHeight
             editable
             title='Nama Anak'
             value={user ? user.namaAnak : ''} />
 
           <Input
+            isHeight
             editable
             title='Nama Orang Tua'
             value={user ? user.namaOrangTua : ''} />
 
           <Input
+            isHeight
             editable
             title='Nomor Telepon'
             value={user ? user.noTelepon : ''} />
 
           <Input
+            isHeight
             editable
             title='Alamat'
             value={user ? user.alamat : ''} />
 
           <Input
+            isHeight
             editable
             title='Email'
             value={user ? user.email : ''} />
 
           <Input
+            isHeight
             editable
             securePassword
             title='Password'
             value='******' />
-
-          {/* <Space height={1} /> */}
 
           <Button
             red

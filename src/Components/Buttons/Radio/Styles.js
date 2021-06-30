@@ -7,6 +7,7 @@ const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 const Styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
+    alignItems: 'center'
   },
   pressable: {
     width: 25,

@@ -3,8 +3,9 @@ import { View, Text } from 'react-native'
 
 import Styles from './Styles'
 import Radio from '../../Buttons/Radio'
+import Input from '../../Inputs'
 
-const CardDiagnosa = ({ title, select, onPressIya, onPressTidak }) => {
+const CardDiagnosa = ({ title, titleInput, select, onPressIya, onPressTidak }) => {
   return (
     <View style={Styles.content}>
       <Text style={Styles.text}>{title}</Text>
@@ -18,6 +19,11 @@ const CardDiagnosa = ({ title, select, onPressIya, onPressTidak }) => {
           isDefault
           select={!select ? true : false}
           onPress={onPressTidak} />
+
+        <Input
+          number
+          title={titleInput}
+          editable={!select} />
       </View>
     </View>
   )

@@ -47,6 +47,8 @@ const FormDiagnosa = ({ navigate }) => {
         data.push({
           kode: datas[key].kode,
           namaGejala: datas[key].namaGejala,
+          batasBawah: datas[key].batasBawah,
+          batasAtas: datas[key].batasAtas,
           select: false
         })
       }
@@ -101,40 +103,46 @@ const FormDiagnosa = ({ navigate }) => {
     }
   }
 
-  return (
-    isLoading ?
+  if (isLoading) {
+    return (
       <View style={Styles.contentLoading}>
         <ActivityIndicator size="large" color='#FF2768' />
       </View>
-      :
-      <View style={Styles.contentForm}>
-        <View>
-          <Input
-            title='Nama Anak'
-            value={namaAnak}
-            errors={messageError}
-            touched={messageError}
-            onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
-            onChangeText={(text) => setNamaAnak(text)} />
-        </View>
+    )
+  }
 
-        <FlatList
-          data={dataDiagnosa}
-          renderItem={({ item }) => (
-            <CardDiagnosa
-              select={item.select}
-              title={item.namaGejala}
-              onPressIya={() => onPressIya(item.kode)}
-              onPressTidak={() => onPressTidak(item.kode)} />)}
-          keyExtractor={item => item.kode} />
-
-        <Space height={10} />
-
-        <Button
-          red
-          title='Daftar'
-          onPress={onPressDaftar} />
+  return (
+    <View style={Styles.contentForm}>
+      <View>
+        <Input
+          isHeight
+          title='Nama Anak'
+          value={namaAnak}
+          errors={messageError}
+          touched={messageError}
+          onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
+          onChangeText={(text) => setNamaAnak(text)} />
       </View>
+
+      <FlatList
+        data={dataDiagnosa}
+        renderItem={({ item }) => (
+          <CardDiagnosa
+            select={item.select}
+            title={item.namaGejala}
+            titleInput={`Nilai (${item.batasBawah} - ${item.batasAtas})`}
+            onPressIya={() => onPressIya(item.kode)}
+            onPressTidak={() => onPressTidak(item.kode)} />)}
+        keyExtractor={item => item.kode}
+        showsVerticalScrollIndicator={false} />
+
+      <Space height={10} />
+
+      <Button
+        red
+        title='Daftar'
+        onPress={onPressDaftar} />
+    </View>
   )
 }
 

@@ -79,6 +79,7 @@ const Login = ({ navigation: { goBack } }) => {
                 <>
                   <Input
                     email
+                    isHeight
                     title='Email'
                     value={values.email}
                     errors={errors.email}
@@ -88,6 +89,7 @@ const Login = ({ navigation: { goBack } }) => {
 
                   <Input
                     icon
+                    isHeight
                     securePassword={securePassword}
                     title='Password'
                     value={values.password}

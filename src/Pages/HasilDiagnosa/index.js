@@ -36,11 +36,13 @@ const HasilDiagnosa = () => {
 
       <View style={Styles.contentForm}>
         <Input
+          isHeight
           editable
           title='Nama Anak'
           value={namaAnak} />
 
         <Input
+          isHeight
           editable
           title='Hasil Diagnosa'
           value='Interaksi Sosial     94%' />
