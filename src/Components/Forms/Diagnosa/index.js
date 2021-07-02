@@ -16,6 +16,7 @@ import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
 import { registerUser } from '../../../Redux/Actions/Auth'
+import { setTsukamoto } from '../../../Redux/Actions/Tsukamoto'
 
 const FormDiagnosa = ({ navigate }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -45,11 +46,13 @@ const FormDiagnosa = ({ navigate }) => {
 
       for (const key in responseGejala.val()) {
         data.push({
+          idGejala: key,
           kode: datas[key].kode,
           namaGejala: datas[key].namaGejala,
           batasBawah: datas[key].batasBawah,
           batasAtas: datas[key].batasAtas,
-          select: false
+          select: false,
+          nilai: ''
         })
       }
 
@@ -61,6 +64,21 @@ const FormDiagnosa = ({ navigate }) => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const onChangeInputNilai = (item, value) => {
+    let newData
+    let datas = dataDiagnosa
+
+    const dataFind = datas.find(data => data.kode == item.kode)
+    dataFind.nilai = value
+
+    datas = datas.filter(data => data.kode !== item.kode)
+
+    newData = [...datas, dataFind]
+    newData.sort((a, b) => a.kode > b.kode ? 1 : -1)
+
+    setDataDiagnosa(newData)
   }
 
   const onPressIya = (selectKode) => {
@@ -81,6 +99,7 @@ const FormDiagnosa = ({ navigate }) => {
 
     const dataFind = datas.find(data => data.kode == selectKode)
     dataFind.select = false
+    dataFind.nilai = ''
 
     datas = datas.filter(data => data.kode !== selectKode)
 
@@ -93,6 +112,7 @@ const FormDiagnosa = ({ navigate }) => {
   const onPressDaftar = () => {
     if (isConnected) {
       if (namaAnak !== '') {
+        dispatch(setTsukamoto({ formDiagnosa: dataDiagnosa }))
         dispatch(registerUser({ namaAnak, formDiagnosa: dataDiagnosa }))
         navigate('HasilDiagnosa')
       } else {
@@ -120,7 +140,7 @@ const FormDiagnosa = ({ navigate }) => {
           value={namaAnak}
           errors={messageError}
           touched={messageError}
-          onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
+          onKeyPress={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
           onChangeText={(text) => setNamaAnak(text)} />
       </View>
 
@@ -128,11 +148,13 @@ const FormDiagnosa = ({ navigate }) => {
         data={dataDiagnosa}
         renderItem={({ item }) => (
           <CardDiagnosa
+            item={item}
             select={item.select}
             title={item.namaGejala}
             titleInput={`Nilai (${item.batasBawah} - ${item.batasAtas})`}
             onPressIya={() => onPressIya(item.kode)}
-            onPressTidak={() => onPressTidak(item.kode)} />)}
+            onPressTidak={() => onPressTidak(item.kode)}
+            onChangeInputNilai={onChangeInputNilai} />)}
         keyExtractor={item => item.kode}
         showsVerticalScrollIndicator={false} />
 

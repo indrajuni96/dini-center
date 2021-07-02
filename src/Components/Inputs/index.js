@@ -14,7 +14,7 @@ import { colors } from '../../Utils'
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 
-const Input = ({ isHeight, editable, securePassword, number, email, icon, title, value, touched, errors, onChangeText, onBlur, onPress }) => {
+const Input = ({ isHeight, editable, securePassword, number, email, icon, title, value, touched, errors, onChangeText, onKeyPress, onBlur, onPress }) => {
   const height = isHeight ? SCREEN_HEIGHT * 0.055 : null
 
   return (
@@ -28,6 +28,7 @@ const Input = ({ isHeight, editable, securePassword, number, email, icon, title,
           value={value}
           style={Styles.textInput}
           onBlur={onBlur}
+          onKeyPress={onKeyPress}
           onChangeText={onChangeText}
           autoCorrect={false}
           autoCapitalize='none'
