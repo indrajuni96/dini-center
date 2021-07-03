@@ -125,22 +125,6 @@ const inferensi = (data) => new Promise(async (resolve, reject) => {
         })
     }
 
-    // for (let n1 = 0; n1 < rule1.length; n1++) {
-    //   for (let n2 = 0; n2 < rule2.length; n2++) {
-    //     if (rule1[n1].idPengetahuan == rule2[n2].idPengetahuan) {
-    //       ruleFinal.push({
-    //         idPengetahuan: rule1[n1].idPengetahuan,
-    //         idPenyakit: rule1[n1].idPenyakit,
-    //         idGejala1: rule1[n1].idGejala1,
-    //         idGejala2: rule2[n2].idGejala2,
-    //         nilaiMin: Math.min(rule1[n1].nilaiFuzzifikasi, rule2[n2].nilaiFuzzifikasi),
-    //         nilaiGejala1: rule1[n1].nilaiFuzzifikasi,
-    //         nilaiGejala2: rule2[n2].nilaiFuzzifikasi,
-    //       })
-    //     }
-    //   }
-    // }
-
     for (let n1 = 0; n1 < rule1.length; n1++) {
       const findRule2 = rule2.find(rule => rule.idPengetahuan == rule1[n1].idPengetahuan)
 
@@ -175,12 +159,28 @@ const inferensi = (data) => new Promise(async (resolve, reject) => {
   }
 })
 
+const defuzifikasi = (data) => new Promise(async (resolve, reject) => {
+  let hitungTambah = 0
+  let hitungPredikat = 0
+
+  for (let i = 0; i < data.length; i++) {
+    const x = data[i].nilaiGejala1 * data[i].nilaiZ
+
+    hitungPredikat += data[i].nilaiMin
+    hitungTambah += x
+  }
+
+  resolve(hitungTambah / hitungPredikat)
+})
+
 export const setTsukamoto = (data) => async (dispatch) => {
   try {
     const dataFuzzifikasi = await fuzzifikasi(data.formDiagnosa)
 
     const dataInferensi = await inferensi(dataFuzzifikasi)
-    console.log(dataInferensi)
+
+    const dataDefuzifikasi = await defuzifikasi(dataInferensi)
+    console.log(dataDefuzifikasi)
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);
