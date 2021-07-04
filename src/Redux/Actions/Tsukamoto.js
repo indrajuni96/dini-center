@@ -1,8 +1,8 @@
 import { ToastAndroid } from 'react-native'
-import auth from '@react-native-firebase/auth'
 import database from '@react-native-firebase/database'
 
 import * as Types from './ActionTypes'
+import { registerUser } from './Auth'
 
 const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
   let dataFuzzifikasi = []
@@ -171,16 +171,36 @@ const defuzifikasi = (data) => new Promise(async (resolve, reject) => {
   }
 
   resolve(hitungTambah / hitungPredikat)
+  // test reject
 })
 
-export const setTsukamoto = (data) => async (dispatch) => {
+export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dispatch) => {
   try {
-    const dataFuzzifikasi = await fuzzifikasi(data.formDiagnosa)
+    const dataFuzzifikasi = await fuzzifikasi(formDiagnosa)
 
     const dataInferensi = await inferensi(dataFuzzifikasi)
 
     const dataDefuzifikasi = await defuzifikasi(dataInferensi)
-    console.log(dataDefuzifikasi)
+
+    const tsukamoto = {
+      fuzzifikasi: dataFuzzifikasi,
+      inferensi: dataInferensi,
+      defuzifikasi: dataDefuzifikasi
+    }
+
+    let diagnosa = []
+
+    for (let i = 0; i < formDiagnosa.length; i++) {
+      if (formDiagnosa[i].select) {
+        diagnosa.push({
+          // idGejala: formDiagnosa[i].idGejala,
+          namaGejala: formDiagnosa[i].namaGejala,
+          nilai: formDiagnosa[i].nilai,
+        })
+      }
+    }
+
+    dispatch(registerUser({ namaAnak, diagnosa, tsukamoto, navigate }))
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);

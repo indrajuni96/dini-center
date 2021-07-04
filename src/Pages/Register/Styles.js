@@ -8,12 +8,15 @@ const Styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingVertical: SCREEN_HEIGHT * 0.02,
+    paddingVertical: SCREEN_HEIGHT * 0.02
+  },
+  contentHeader: {
     paddingHorizontal: SCREEN_WIDTH * 0.03,
   },
   contentForm: {
+    flex: 1,
     paddingHorizontal: SCREEN_WIDTH * 0.03,
-  }
+  },
 })
 
 export default Styles

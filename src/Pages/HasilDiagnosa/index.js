@@ -15,7 +15,11 @@ import { BackHandlerNotIsFocusedAction } from '../../Utils'
 const HasilDiagnosa = () => {
   const dispatch = useDispatch()
 
-  const namaAnak = useSelector(state => state.AuthStore.formRegister.namaAnak)
+  const { namaAnak, diagnosa, tsukamoto } = useSelector(state => ({
+    namaAnak: state.AuthStore.formRegister.namaAnak,
+    diagnosa: state.AuthStore.diagnosa,
+    tsukamoto: state.AuthStore.tsukamoto
+  }))
 
   BackHandlerNotIsFocusedAction()
 
@@ -45,7 +49,7 @@ const HasilDiagnosa = () => {
           isHeight
           editable
           title='Hasil Diagnosa'
-          value='Interaksi Sosial     94%' />
+          value={tsukamoto.defuzifikasi.toString()} />
 
         <Space height={30} />
 

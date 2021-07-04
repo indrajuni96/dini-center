@@ -7,8 +7,8 @@ const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 const Styles = StyleSheet.create({
   content: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

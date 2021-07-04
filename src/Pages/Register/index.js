@@ -3,26 +3,32 @@ import {
   View,
   BackHandler
 } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 
 import Styles from './Styles'
 import {
   Space,
   Header,
+  Loading,
   FormRegister,
   FormDiagnosa
 } from '../../Components'
-import { clearFormRegister } from '../../Redux/Actions/Auth'
+import { clearFormRegister, isLoading } from '../../Redux/Actions/Auth'
 
 const Register = ({ navigation: { goBack, navigate } }) => {
   const [isNext, setIsNext] = useState(false)
   const [securePassword, setSecurePassword] = useState(true);
 
-  const dispacth = useDispatch()
+  const dispatch = useDispatch()
+
+  // const { isLoading } = useSelector(state => ({
+  //   isLoading: state.AuthStore.isLoading
+  // }))
 
   useFocusEffect(useCallback(() => {
     backHandlerAction()
+    dispatch(isLoading(false))
   }, [isNext]))
 
   const backHandlerAction = () => {
@@ -43,25 +49,31 @@ const Register = ({ navigation: { goBack, navigate } }) => {
 
   const onBack = () => {
     goBack()
-    dispacth(clearFormRegister())
+    dispatch(clearFormRegister())
   }
 
   return (
     <View style={Styles.container}>
-      <Header
-        title='Daftar'
-        onPress={() => isNext ? setIsNext(false) : onBack()} />
+      <View style={Styles.contentHeader}>
+        <Header
+          title='Daftar'
+          onPress={() => isNext ? setIsNext(false) : onBack()} />
+      </View>
 
       <Space height={30} />
 
-      {isNext ?
-        <FormDiagnosa
-          navigate={navigate}
-          onPressNext={() => setIsNext(false)} />
-        : <FormRegister
-          securePassword={securePassword}
-          onPressNext={() => setIsNext(true)}
-          onPressSecurePassword={() => setSecurePassword(state => !state)} />}
+      <View style={Styles.contentForm}>
+        {isNext ?
+          <FormDiagnosa
+            navigate={navigate}
+            onPressNext={() => setIsNext(false)} />
+          : <FormRegister
+            securePassword={securePassword}
+            onPressNext={() => setIsNext(true)}
+            onPressSecurePassword={() => setSecurePassword(state => !state)} />}
+      </View>
+
+      {/* {isLoading ? <Loading /> : null} */}
     </View>
   )
 }

@@ -5,7 +5,9 @@ const initialState = {
   isDiagnosa: false,
   isLoading: false,
   user: {},
-  formRegister: {}
+  formRegister: {},
+  diagnosa: {},
+  tsukamoto: {}
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -35,7 +37,9 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         userUID: action.data.userUID,
-        user: action.data.user
+        user: action.data.user,
+        diagnosa: action.data.diagnosa,
+        tsukamoto: action.data.tsukamoto
       }
     case Types.CLEAR_FORM_REGISTER:
       return {

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import {
   View,
+  Keyboard,
   FlatList,
   ToastAndroid,
   ActivityIndicator
@@ -110,11 +111,13 @@ const FormDiagnosa = ({ navigate }) => {
   }
 
   const onPressDaftar = () => {
+    Keyboard.dismiss()
+
     if (isConnected) {
       if (namaAnak !== '') {
-        dispatch(setTsukamoto({ formDiagnosa: dataDiagnosa }))
-        dispatch(registerUser({ namaAnak, formDiagnosa: dataDiagnosa }))
-        navigate('HasilDiagnosa')
+        dispatch(setTsukamoto({ namaAnak, formDiagnosa: dataDiagnosa, navigate }))
+        // dispatch(registerUser({ namaAnak, formDiagnosa: dataDiagnosa }))
+        // navigate('HasilDiagnosa')
       } else {
         setMessageError('Wajib Diisi')
       }
