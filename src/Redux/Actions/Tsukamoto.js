@@ -1,7 +1,6 @@
 import { ToastAndroid } from 'react-native'
 import database from '@react-native-firebase/database'
 
-import * as Types from './ActionTypes'
 import { registerUser } from './Auth'
 
 const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
@@ -185,7 +184,7 @@ export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dis
     const tsukamoto = {
       fuzzifikasi: dataFuzzifikasi,
       inferensi: dataInferensi,
-      defuzifikasi: dataDefuzifikasi
+      defuzifikasi: dataDefuzifikasi.toFixed(2)
     }
 
     let diagnosa = []

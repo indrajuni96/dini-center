@@ -135,9 +135,8 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => asy
       diagnosa,
       tsukamoto
     }))
-    // dispatch(clearFormRegister())
 
-    navigate('HasilDiagnosa')
+    navigate('Diagnosa')
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);

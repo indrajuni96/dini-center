@@ -116,8 +116,6 @@ const FormDiagnosa = ({ navigate }) => {
     if (isConnected) {
       if (namaAnak !== '') {
         dispatch(setTsukamoto({ namaAnak, formDiagnosa: dataDiagnosa, navigate }))
-        // dispatch(registerUser({ namaAnak, formDiagnosa: dataDiagnosa }))
-        // navigate('HasilDiagnosa')
       } else {
         setMessageError('Wajib Diisi')
       }

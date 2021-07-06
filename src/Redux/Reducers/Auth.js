@@ -44,6 +44,7 @@ const AuthReducer = (state = initialState, action) => {
     case Types.CLEAR_FORM_REGISTER:
       return {
         ...state,
+        isLoading: false,
         formRegister: {}
       }
     case Types.LOGOUT_USER:

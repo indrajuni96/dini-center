@@ -14,7 +14,7 @@ import {
   FormRegister,
   FormDiagnosa
 } from '../../Components'
-import { clearFormRegister, isLoading } from '../../Redux/Actions/Auth'
+import { clearFormRegister } from '../../Redux/Actions/Auth'
 
 const Register = ({ navigation: { goBack, navigate } }) => {
   const [isNext, setIsNext] = useState(false)
@@ -22,13 +22,12 @@ const Register = ({ navigation: { goBack, navigate } }) => {
 
   const dispatch = useDispatch()
 
-  // const { isLoading } = useSelector(state => ({
-  //   isLoading: state.AuthStore.isLoading
-  // }))
+  const { isLoading } = useSelector(state => ({
+    isLoading: state.AuthStore.isLoading
+  }))
 
   useFocusEffect(useCallback(() => {
     backHandlerAction()
-    dispatch(isLoading(false))
   }, [isNext]))
 
   const backHandlerAction = () => {
@@ -73,7 +72,7 @@ const Register = ({ navigation: { goBack, navigate } }) => {
             onPressSecurePassword={() => setSecurePassword(state => !state)} />}
       </View>
 
-      {/* {isLoading ? <Loading /> : null} */}
+      {isLoading ? <Loading /> : null}
     </View>
   )
 }

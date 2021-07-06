@@ -4,6 +4,7 @@ import {
   Text,
   ToastAndroid
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { useNetInfo } from "@react-native-community/netinfo";
 
@@ -17,9 +18,12 @@ import {
   DataCarousel,
   BackHandlerAction
 } from '../../Utils'
+import { clearFormRegister } from '../../Redux/Actions/Auth'
 
 const LandingPage = ({ navigation: { navigate, isFocused } }) => {
   const [activeSlide, setActiveSlide] = useState(0)
+
+  const dispatch = useDispatch()
 
   BackHandlerAction(isFocused)
 
@@ -35,6 +39,7 @@ const LandingPage = ({ navigation: { navigate, isFocused } }) => {
 
   const onPress = (routerName) => {
     if (isConnected) {
+      dispatch(clearFormRegister())
       navigate(routerName)
     } else {
       ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);

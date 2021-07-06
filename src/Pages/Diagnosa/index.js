@@ -12,7 +12,7 @@ import {
 import { setIsDiagnosa } from '../../Redux/Actions/Auth'
 import { BackHandlerNotIsFocusedAction } from '../../Utils'
 
-const HasilDiagnosa = () => {
+const Diagnosa = () => {
   const dispatch = useDispatch()
 
   const { namaAnak, diagnosa, tsukamoto } = useSelector(state => ({
@@ -48,8 +48,14 @@ const HasilDiagnosa = () => {
         <Input
           isHeight
           editable
-          title='Hasil Diagnosa'
+          title='Hasil Fuzzy Tsukamoto'
           value={tsukamoto.defuzifikasi.toString()} />
+
+        <Input
+          isHeight
+          editable
+          title='Hasil Diagnosa'
+          value='Sedang' />
 
         <Space height={30} />
 
@@ -62,4 +68,4 @@ const HasilDiagnosa = () => {
   )
 }
 
-export default HasilDiagnosa
+export default Diagnosa
