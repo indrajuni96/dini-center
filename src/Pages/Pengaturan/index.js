@@ -36,8 +36,8 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
 
         <ListPengaturan
           isOnPress
-          title='Informasi'
-          onPress={() => console.log('Informasi')} />
+          title='Hasil Diagnosa'
+          onPress={() => console.log('Hasil Diagnosa')} />
 
         <Space height={2} />
 

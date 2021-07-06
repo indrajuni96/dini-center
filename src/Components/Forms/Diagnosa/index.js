@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import {
   View,
+  Keyboard,
   FlatList,
   ToastAndroid,
   ActivityIndicator
@@ -16,6 +17,7 @@ import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
 import { registerUser } from '../../../Redux/Actions/Auth'
+import { setTsukamoto } from '../../../Redux/Actions/Tsukamoto'
 
 const FormDiagnosa = ({ navigate }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -45,9 +47,13 @@ const FormDiagnosa = ({ navigate }) => {
 
       for (const key in responseGejala.val()) {
         data.push({
+          idGejala: key,
           kode: datas[key].kode,
           namaGejala: datas[key].namaGejala,
-          select: false
+          batasBawah: datas[key].batasBawah,
+          batasAtas: datas[key].batasAtas,
+          select: false,
+          nilai: ''
         })
       }
 
@@ -59,6 +65,21 @@ const FormDiagnosa = ({ navigate }) => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const onChangeInputNilai = (item, value) => {
+    let newData
+    let datas = dataDiagnosa
+
+    const dataFind = datas.find(data => data.kode == item.kode)
+    dataFind.nilai = value
+
+    datas = datas.filter(data => data.kode !== item.kode)
+
+    newData = [...datas, dataFind]
+    newData.sort((a, b) => a.kode > b.kode ? 1 : -1)
+
+    setDataDiagnosa(newData)
   }
 
   const onPressIya = (selectKode) => {
@@ -79,6 +100,7 @@ const FormDiagnosa = ({ navigate }) => {
 
     const dataFind = datas.find(data => data.kode == selectKode)
     dataFind.select = false
+    dataFind.nilai = ''
 
     datas = datas.filter(data => data.kode !== selectKode)
 
@@ -89,10 +111,11 @@ const FormDiagnosa = ({ navigate }) => {
   }
 
   const onPressDaftar = () => {
+    Keyboard.dismiss()
+
     if (isConnected) {
       if (namaAnak !== '') {
-        dispatch(registerUser({ namaAnak, formDiagnosa: dataDiagnosa }))
-        navigate('HasilDiagnosa')
+        dispatch(setTsukamoto({ namaAnak, formDiagnosa: dataDiagnosa, navigate }))
       } else {
         setMessageError('Wajib Diisi')
       }
@@ -101,40 +124,48 @@ const FormDiagnosa = ({ navigate }) => {
     }
   }
 
-  return (
-    isLoading ?
+  if (isLoading) {
+    return (
       <View style={Styles.contentLoading}>
         <ActivityIndicator size="large" color='#FF2768' />
       </View>
-      :
-      <View style={Styles.contentForm}>
-        <View>
-          <Input
-            title='Nama Anak'
-            value={namaAnak}
-            errors={messageError}
-            touched={messageError}
-            onBlur={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
-            onChangeText={(text) => setNamaAnak(text)} />
-        </View>
+    )
+  }
 
-        <FlatList
-          data={dataDiagnosa}
-          renderItem={({ item }) => (
-            <CardDiagnosa
-              select={item.select}
-              title={item.namaGejala}
-              onPressIya={() => onPressIya(item.kode)}
-              onPressTidak={() => onPressTidak(item.kode)} />)}
-          keyExtractor={item => item.kode} />
-
-        <Space height={10} />
-
-        <Button
-          red
-          title='Daftar'
-          onPress={onPressDaftar} />
+  return (
+    <View style={Styles.contentForm}>
+      <View>
+        <Input
+          isHeight
+          title='Nama Anak'
+          value={namaAnak}
+          errors={messageError}
+          touched={messageError}
+          onKeyPress={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
+          onChangeText={(text) => setNamaAnak(text)} />
       </View>
+
+      <FlatList
+        data={dataDiagnosa}
+        renderItem={({ item }) => (
+          <CardDiagnosa
+            item={item}
+            select={item.select}
+            title={item.namaGejala}
+            titleInput={`Nilai (${item.batasBawah} - ${item.batasAtas})`}
+            onPressIya={() => onPressIya(item.kode)}
+            onPressTidak={() => onPressTidak(item.kode)}
+            onChangeInputNilai={onChangeInputNilai} />)}
+        keyExtractor={item => item.kode}
+        showsVerticalScrollIndicator={false} />
+
+      <Space height={10} />
+
+      <Button
+        red
+        title='Daftar'
+        onPress={onPressDaftar} />
+    </View>
   )
 }
 

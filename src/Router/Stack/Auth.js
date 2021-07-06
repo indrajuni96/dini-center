@@ -5,7 +5,7 @@ import {
   Login,
   Register,
   LandingPage,
-  HasilDiagnosa
+  Diagnosa
 } from '../../Pages'
 import { screenOptions } from './Config'
 
@@ -20,7 +20,7 @@ const AuthStackScreen = () => {
       <AuthStack.Screen name="Login" component={Login} />
       <AuthStack.Screen name="Register" component={Register} />
       <AuthStack.Screen name="LandingPage" component={LandingPage} />
-      <AuthStack.Screen name="HasilDiagnosa" component={HasilDiagnosa} />
+      <AuthStack.Screen name="Diagnosa" component={Diagnosa} />
     </AuthStack.Navigator>
   )
 }

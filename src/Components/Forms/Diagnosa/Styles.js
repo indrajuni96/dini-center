@@ -9,6 +9,7 @@ const Styles = StyleSheet.create({
     flex: 1
   },
   contentForm: {
+    flex: 1,
     paddingHorizontal: SCREEN_WIDTH * 0.03,
   },
   contentLoading: {

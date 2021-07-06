@@ -4,7 +4,7 @@ import database from '@react-native-firebase/database'
 
 import * as Types from './ActionTypes'
 
-const isLoading = (loading) => ({
+export const isLoading = (loading) => ({
   type: Types.IS_LOADING,
   isLoading: loading
 })
@@ -24,11 +24,13 @@ const formRegister = ({ formRegister }) => ({
   }
 })
 
-const register = ({ userUID, user }) => ({
+const register = ({ userUID, user, diagnosa, tsukamoto }) => ({
   type: Types.REGISTER_USER,
   data: {
     userUID,
-    user
+    user,
+    diagnosa,
+    tsukamoto
   }
 })
 
@@ -100,13 +102,13 @@ export const loginUser = (data) => async (dispatch) => {
   }
 }
 
-export const registerUser = (data) => async (dispatch, getState) => {
+export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => async (dispatch, getState) => {
   try {
     dispatch(isLoading(true))
 
     const formRegister = getState().AuthStore.formRegister
 
-    formRegister.namaAnak = data.namaAnak
+    formRegister.namaAnak = namaAnak
 
     const responseRegister = await auth().createUserWithEmailAndPassword(formRegister.email.toLowerCase(), formRegister.password)
 
@@ -117,14 +119,24 @@ export const registerUser = (data) => async (dispatch, getState) => {
         noTelepon: formRegister.noTelepon,
         alamat: formRegister.alamat,
         email: formRegister.email,
-        namaAnak: data.namaAnak,
+        namaAnak: namaAnak,
+      })
+
+    await database()
+      .ref(`/hasilDiagnosa/${responseRegister.user.uid}`)
+      .set({
+        diagnosa,
+        nilaiTsukamoto: tsukamoto.defuzifikasi
       })
 
     dispatch(register({
       userUID: responseRegister.user.uid,
-      user: formRegister
+      user: formRegister,
+      diagnosa,
+      tsukamoto
     }))
-    dispatch(clearFormRegister())
+
+    navigate('Diagnosa')
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);

@@ -12,10 +12,14 @@ import {
 import { setIsDiagnosa } from '../../Redux/Actions/Auth'
 import { BackHandlerNotIsFocusedAction } from '../../Utils'
 
-const HasilDiagnosa = () => {
+const Diagnosa = () => {
   const dispatch = useDispatch()
 
-  const namaAnak = useSelector(state => state.AuthStore.formRegister.namaAnak)
+  const { namaAnak, diagnosa, tsukamoto } = useSelector(state => ({
+    namaAnak: state.AuthStore.formRegister.namaAnak,
+    diagnosa: state.AuthStore.diagnosa,
+    tsukamoto: state.AuthStore.tsukamoto
+  }))
 
   BackHandlerNotIsFocusedAction()
 
@@ -36,14 +40,22 @@ const HasilDiagnosa = () => {
 
       <View style={Styles.contentForm}>
         <Input
+          isHeight
           editable
           title='Nama Anak'
           value={namaAnak} />
 
         <Input
+          isHeight
+          editable
+          title='Hasil Fuzzy Tsukamoto'
+          value={tsukamoto.defuzifikasi.toString()} />
+
+        <Input
+          isHeight
           editable
           title='Hasil Diagnosa'
-          value='Interaksi Sosial     94%' />
+          value='Sedang' />
 
         <Space height={30} />
 
@@ -56,4 +68,4 @@ const HasilDiagnosa = () => {
   )
 }
 
-export default HasilDiagnosa
+export default Diagnosa
