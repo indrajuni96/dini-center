@@ -5,6 +5,11 @@ import { colors } from '../../Utils'
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 
 const Styles = StyleSheet.create({
+  contentIsDefault: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   content: {
     flex: 1,
     width: SCREEN_WIDTH,

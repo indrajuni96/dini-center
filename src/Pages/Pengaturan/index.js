@@ -37,7 +37,7 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
         <ListPengaturan
           isOnPress
           title='Hasil Diagnosa'
-          onPress={() => console.log('Hasil Diagnosa')} />
+          onPress={() => navigate('HasilDiagnosa')} />
 
         <Space height={2} />
 

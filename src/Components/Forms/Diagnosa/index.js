@@ -14,9 +14,9 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import Styles from './Styles'
 import Space from '../../Space'
 import Input from '../../Inputs'
+import Loading from '../../Loading'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
-import { registerUser } from '../../../Redux/Actions/Auth'
 import { setTsukamoto } from '../../../Redux/Actions/Tsukamoto'
 
 const FormDiagnosa = ({ navigate }) => {
@@ -126,9 +126,7 @@ const FormDiagnosa = ({ navigate }) => {
 
   if (isLoading) {
     return (
-      <View style={Styles.contentLoading}>
-        <ActivityIndicator size="large" color='#FF2768' />
-      </View>
+      <Loading isDefault />
     )
   }
 

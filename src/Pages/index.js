@@ -8,6 +8,7 @@ import Diagnosa from './Diagnosa'
 import Register from './Register'
 import Pengaturan from './Pengaturan'
 import LandingPage from './LandingPage'
+import HasilDiagnosa from './HasilDiagnosa'
 
 export {
   Test,
@@ -20,4 +21,5 @@ export {
   Register,
   Pengaturan,
   LandingPage,
+  HasilDiagnosa
 }
