@@ -67,7 +67,7 @@ const Game = ({ navigation: { navigate, isFocused } }) => {
             renderItem={({ item }) => (
               <ListGame
                 item={item}
-                onPress={() => console.log('game')} />
+                onPress={() => navigate('StartGame', { item })} />
             )}
             keyExtractor={item => item.key}
             showsVerticalScrollIndicator={false} />

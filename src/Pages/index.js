@@ -5,6 +5,7 @@ import Profile from './Profile'
 import History from './History'
 import Diagnosa from './Diagnosa'
 import Register from './Register'
+import StartGame from './StartGame'
 import Pengaturan from './Pengaturan'
 import LandingPage from './LandingPage'
 import HasilDiagnosa from './HasilDiagnosa'
@@ -17,6 +18,7 @@ export {
   History,
   Diagnosa,
   Register,
+  StartGame,
   Pengaturan,
   LandingPage,
   HasilDiagnosa

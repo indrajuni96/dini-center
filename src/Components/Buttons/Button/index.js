@@ -8,7 +8,7 @@ import {
 import Styles from './Styles'
 import { colors } from '../../../Utils'
 
-const Button = ({ red, title, onPress }) => {
+const Button = ({ disabled, red, title, onPress }) => {
   const color = red ? colors.white : colors.black
   const borderColor = red ? colors.red : colors.black
   const backgroundColor = red ? colors.red : colors.white
@@ -16,6 +16,7 @@ const Button = ({ red, title, onPress }) => {
   return (
     <View style={[Styles.content, { borderColor, backgroundColor }]}>
       <Pressable
+        disabled={disabled}
         style={Styles.pressable}
         android_ripple={Styles.ripple}
         onPress={onPress}>
