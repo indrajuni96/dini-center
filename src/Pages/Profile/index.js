@@ -66,10 +66,10 @@ const Profile = ({ navigation: { goBack } }) => {
             title='Password'
             value='******' />
 
-          <Button
+          {/* <Button
             red
             title='Ubah Profile'
-            onPress={() => console.log('ubah profile')} />
+            onPress={() => console.log('ubah profile')} /> */}
         </View>
 
         <Space height={30} />

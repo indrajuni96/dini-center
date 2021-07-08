@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import {
   View,
   Text,
-  Pressable
+  Pressable,
+  SafeAreaView,
+  FlatList
 } from 'react-native'
 import { useSelector } from 'react-redux'
+import database from '@react-native-firebase/database'
+import { useFocusEffect } from '@react-navigation/native'
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons'
 
@@ -24,7 +28,44 @@ import {
 const Home = ({ navigation: { isFocused, navigate } }) => {
   BackHandlerAction(isFocused)
 
-  const user = useSelector(state => state.AuthStore.user)
+  const { userUID, user } = useSelector((state) => ({
+    userUID: state.AuthStore.userUID,
+    user: state.AuthStore.user
+  }))
+
+  const [dataRiwayatGame, setDataRiwayatGame] = useState([])
+
+  useFocusEffect(useCallback(() => {
+    loadData()
+  }, []))
+
+  const loadData = async () => {
+    try {
+      let data = []
+      const responseRiwayatGame = await database()
+        .ref('/riwayatGame')
+        .once('value')
+
+      const datas = responseRiwayatGame.val()
+
+      for (const key in responseRiwayatGame.val()) {
+        if (datas[key].idUser == userUID && data.length <= 4) {
+          data.push({
+            key,
+            namaGame: datas[key].namaGame,
+            status: datas[key].status,
+            waktu: datas[key].waktu
+          })
+        }
+      }
+
+      // data.sort((a, b) => (a.waktu < b.waktu) ? -1 : 1)
+
+      setDataRiwayatGame(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <View style={Styles.container}>
@@ -86,27 +127,17 @@ const Home = ({ navigation: { isFocused, navigate } }) => {
 
         <Space height={20} />
 
-        <View style={Styles.listHistory}>
-          <ListHistory
-            disabled
-            title='ayah'
-            status='berhasil menggucapkan' />
-
-          <ListHistory
-            disabled
-            title='ibu'
-            status='berhasil menggucapkan' />
-
-          <ListHistory
-            disabled
-            title='kakak'
-            status='tidak berhasil menggucapkan' />
-
-          <ListHistory
-            disabled
-            title='kakak'
-            status='tidak berhasil menggucapkan' />
-        </View>
+        <SafeAreaView>
+          <FlatList
+            data={dataRiwayatGame}
+            renderItem={({ item }) => (
+              <ListHistory
+                disabled
+                item={item} />
+            )}
+            keyExtractor={item => item.key}
+            showsVerticalScrollIndicator={false} />
+        </SafeAreaView>
       </View>
     </View>
   )

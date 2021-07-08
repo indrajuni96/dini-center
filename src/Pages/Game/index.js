@@ -44,6 +44,8 @@ const Game = ({ navigation: { navigate, isFocused } }) => {
         })
       }
 
+      data.sort((a, b) => (a.namaGame > b.namaGame) ? 1 : -1)
+
       setDataGame(data)
     } catch (error) {
       console.log(error)
