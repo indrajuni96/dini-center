@@ -8,7 +8,8 @@ import {
 import Styles from './Styles'
 import Space from '../Space'
 
-const Loading = (isDefault) => {
+const Loading = ({ isDefault }) => {
+
   if (isDefault) {
     return (
       <View style={Styles.contentIsDefault}>

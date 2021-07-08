@@ -10,7 +10,7 @@ const Styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingTop: SCREEN_HEIGHT * 0.02,
   },
-  scrollView: {
+  safeAreaView: {
     flex: 1
   },
 })

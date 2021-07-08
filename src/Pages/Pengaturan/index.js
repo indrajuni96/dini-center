@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Styles from './Styles'
 import {
@@ -16,6 +16,10 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
 
   const dispatch = useDispatch()
 
+  const { user } = useSelector((state) => ({
+    user: state.AuthStore.user
+  }))
+
   return (
     <View style={Styles.container}>
       <Header
@@ -27,19 +31,23 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
       <View style={Styles.contentList}>
         <Space height={10} />
 
-        <ListPengaturan
-          isOnPress
-          title='Profile'
-          onPress={() => navigate('Profile')} />
+        {user.level != 'admin' ?
+          <>
+            <ListPengaturan
+              isOnPress
+              title='Profile'
+              onPress={() => navigate('Profile')} />
 
-        <Space height={2} />
+            <Space height={2} />
 
-        <ListPengaturan
-          isOnPress
-          title='Hasil Diagnosa'
-          onPress={() => navigate('HasilDiagnosa')} />
+            <ListPengaturan
+              isOnPress
+              title='Hasil Diagnosa'
+              onPress={() => navigate('HasilDiagnosa')} />
 
-        <Space height={2} />
+            <Space height={2} />
+          </>
+          : null}
 
         <ListPengaturan
           title='Versi Aplikasi'

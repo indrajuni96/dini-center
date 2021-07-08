@@ -108,6 +108,7 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => asy
 
     const formRegister = getState().AuthStore.formRegister
 
+    formRegister.level = 'user'
     formRegister.namaAnak = namaAnak
 
     const responseRegister = await auth().createUserWithEmailAndPassword(formRegister.email.toLowerCase(), formRegister.password)
@@ -115,11 +116,12 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => asy
     await database()
       .ref(`/users/${responseRegister.user.uid}`)
       .set({
+        level: formRegister.level,
         namaOrangTua: formRegister.namaOrangTua,
         noTelepon: formRegister.noTelepon,
         alamat: formRegister.alamat,
         email: formRegister.email,
-        namaAnak: namaAnak,
+        namaAnak: formRegister.namaAnak,
       })
 
     await database()

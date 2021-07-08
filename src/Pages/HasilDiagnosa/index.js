@@ -42,6 +42,7 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
 
       for (const key in responseHasilDiagnosa.val().diagnosa) {
         data.push({
+          key,
           namaGejala: datas[key].namaGejala,
           nilai: datas[key].nilai
         })
@@ -83,10 +84,8 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
           <SafeAreaView style={Styles.safeAreaView}>
             <FlatList
               data={dataDiagnosa}
-              renderItem={({ item }) => (
-                <CardHasilDiagnosa item={item} />
-              )}
-              keyExtractor={item => item.namaGejala}
+              renderItem={({ item }) => <CardHasilDiagnosa item={item} />}
+              keyExtractor={item => item.key}
               showsVerticalScrollIndicator={false} />
           </SafeAreaView>
 
