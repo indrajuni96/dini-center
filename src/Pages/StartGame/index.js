@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import {
   View,
   Text,
   Pressable
 } from 'react-native'
+import Tts from 'react-native-tts'
+import { useFocusEffect } from '@react-navigation/native'
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome'
 import IconIonicons from 'react-native-vector-icons/dist/Ionicons'
 
@@ -20,6 +22,22 @@ const StartGame = ({ route, navigation: { goBack } }) => {
   const { item } = route.params
 
   const [isEnabled, setIsEnabled] = useState(false)
+
+  useFocusEffect(useCallback(() => {
+    Tts.getInitStatus().then(initialTts())
+  }, []))
+
+  const initialTts = async () => {
+    try {
+      await Tts.setDefaultLanguage('id')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onVoice = () => {
+    Tts.speak(item.namaGame)
+  }
 
   const onMulai = () => {
     setIsEnabled(true)
@@ -55,7 +73,7 @@ const StartGame = ({ route, navigation: { goBack } }) => {
             disabled={isEnabled}
             style={Styles.pressable}
             android_ripple={Styles.ripple}
-            onPress={() => console.log('voice')}>
+            onPress={onVoice}>
             <IconIonicons name="volume-medium" size={25} color="white" />
           </Pressable>
         </View>
