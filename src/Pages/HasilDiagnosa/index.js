@@ -5,6 +5,7 @@ import {
   FlatList,
   SafeAreaView
 } from 'react-native'
+import { v4 as uuidv4 } from 'uuid'
 import { useSelector } from 'react-redux'
 import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
@@ -22,8 +23,11 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [nilaiTsukamoto, setNilaiTsukamoto] = useState('0')
   const [dataDiagnosa, setDataDiagnosa] = useState([])
+  const [dataForwardChaining, setDataForwardChaining] = useState('')
 
-  const userUID = useSelector((state) => state.AuthStore.userUID)
+  const { userUID } = useSelector((state) => ({
+    userUID: state.AuthStore.userUID
+  }))
 
   useFocusEffect(useCallback(() => {
     loadData()
@@ -33,23 +37,49 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
     try {
       setIsLoading(true)
 
-      let data = []
+      let dataPenyakit = []
+      let dataFuzzyTsukamoto = []
+
       const responseHasilDiagnosa = await database()
         .ref(`/hasilDiagnosa/${userUID}`)
         .once('value')
 
-      const datas = responseHasilDiagnosa.val().diagnosa
+      const responsePenyakit = await database()
+        .ref('/penyakit')
+        .once('value')
 
-      for (const key in responseHasilDiagnosa.val().diagnosa) {
-        data.push({
-          key,
-          namaGejala: datas[key].namaGejala,
-          nilai: datas[key].nilai
+      const datas = responseHasilDiagnosa.val()
+      const datasPenyakit = responsePenyakit.val()
+
+      for (const key in responsePenyakit.val()) {
+        dataPenyakit.push({
+          idPenyakit: key,
+          namaPenyakit: datasPenyakit[key].namaPenyakit,
+          batasAtas: datasPenyakit[key].batasAtas,
+          batasBawah: datasPenyakit[key].batasBawah
         })
       }
 
-      setDataDiagnosa(data)
-      setNilaiTsukamoto(responseHasilDiagnosa.val().nilaiTsukamoto.toFixed(2))
+      for (const key in responseHasilDiagnosa.val()) {
+        if (datas[key].metode == 'forward chaining') {
+          const findPenyakit = dataPenyakit.find((state) => state.idPenyakit == datas[key].idPenyakit)
+
+          setDataForwardChaining(findPenyakit.namaPenyakit)
+        }
+
+        if (datas[key].metode == 'fuzzy tsukamoto') {
+          for (let i = 0; i < datas[key].diagnosa.length; i++) {
+            dataFuzzyTsukamoto.push({
+              key: uuidv4(),
+              namaGejala: datas[key].diagnosa[i].namaGejala,
+              nilai: datas[key].diagnosa[i].nilai
+            })
+          }
+
+          setDataDiagnosa(dataFuzzyTsukamoto)
+          setNilaiTsukamoto(datas[key].nilaiTsukamoto)
+        }
+      }
     } catch (error) {
       console.log(error)
     } finally {
@@ -67,6 +97,12 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
 
       {isLoading ? <Loading isDefault /> :
         <>
+          <Input
+            isHeight
+            editable
+            title='Hasil Forward Chaining'
+            value={dataForwardChaining ? dataForwardChaining : ''} />
+
           <Input
             isHeight
             editable
