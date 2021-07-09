@@ -1,50 +1,20 @@
 import { ToastAndroid } from 'react-native'
 import database from '@react-native-firebase/database'
 
-import { registerUser } from './Auth'
+import { isLoading, registerUser } from './Auth'
+import * as Types from './ActionTypes'
 
-const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
-  let dataFuzzifikasi = []
-
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].nilai < data[i].batasBawah && data[i].select) {
-      dataFuzzifikasi.push({
-        idGejala: data[i].idGejala,
-        kode: data[i].kode,
-        nilaiFuzzifikasi: '0'
-      })
-    }
-
-    if (parseInt(data[i].nilai) >= parseInt(data[i].batasBawah) && parseInt(data[i].nilai) <= parseInt(data[i].batasAtas)) {
-      const result = (data[i].nilai - data[i].batasBawah) / (data[i].batasAtas - data[i].batasBawah)
-
-      dataFuzzifikasi.push({
-        idGejala: data[i].idGejala,
-        kode: data[i].kode,
-        nilaiFuzzifikasi: result.toFixed(2)
-      })
-    }
-
-    if (parseInt(data[i].nilai) > parseInt(data[i].batasAtas)) {
-      dataFuzzifikasi.push({
-        idGejala: data[i].idGejala,
-        kode: data[i].kode,
-        nilaiFuzzifikasi: '1'
-      })
-    }
-  }
-
-  resolve(dataFuzzifikasi)
+const setDataMetode = ({ data }) => ({
+  type: Types.GET_DATA_METODE,
+  data
 })
 
-const inferensi = (data) => new Promise(async (resolve, reject) => {
+export const getDataMetode = () => async (dispatch) => {
   try {
-    let rule1 = []
-    let rule2 = []
-    let ruleFinal = []
+    dispatch(isLoading(true))
+
     let dataGejala = []
     let dataPenyakit = []
-    let dataInferensi = []
     let dataPengetahuan = []
 
     const responseGejala = await database()
@@ -87,6 +57,62 @@ const inferensi = (data) => new Promise(async (resolve, reject) => {
         idPenyakit: datasPengetahuan[key].idPenyakit
       })
     }
+
+    dispatch(setDataMetode({
+      data: {
+        dataGejala,
+        dataPenyakit,
+        dataPengetahuan
+      }
+    }))
+  } catch (error) {
+    console.log(error)
+    ToastAndroid.show(error, ToastAndroid.SHORT);
+  } finally {
+    dispatch(isLoading(false))
+  }
+}
+
+const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
+  let dataFuzzifikasi = []
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].nilai < data[i].batasBawah && data[i].select) {
+      dataFuzzifikasi.push({
+        idGejala: data[i].idGejala,
+        kode: data[i].kode,
+        nilaiFuzzifikasi: '0'
+      })
+    }
+
+    if (parseInt(data[i].nilai) >= parseInt(data[i].batasBawah) && parseInt(data[i].nilai) <= parseInt(data[i].batasAtas)) {
+      const result = (data[i].nilai - data[i].batasBawah) / (data[i].batasAtas - data[i].batasBawah)
+
+      dataFuzzifikasi.push({
+        idGejala: data[i].idGejala,
+        kode: data[i].kode,
+        nilaiFuzzifikasi: result.toFixed(2)
+      })
+    }
+
+    if (parseInt(data[i].nilai) > parseInt(data[i].batasAtas)) {
+      dataFuzzifikasi.push({
+        idGejala: data[i].idGejala,
+        kode: data[i].kode,
+        nilaiFuzzifikasi: '1'
+      })
+    }
+  }
+
+  resolve(dataFuzzifikasi)
+})
+
+const inferensi = (data, dataGejala, dataPenyakit, dataPengetahuan) => new Promise(async (resolve, reject) => {
+  try {
+    let rule1 = []
+    let rule2 = []
+    let ruleFinal = []
+    let dataInferensi = []
 
     for (let i = 0; i < data.length; i++) {
       dataPengetahuan
@@ -173,11 +199,15 @@ const defuzifikasi = (data) => new Promise(async (resolve, reject) => {
   // test reject
 })
 
-export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dispatch) => {
+export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dispatch, getState) => {
   try {
+    const dataGejala = getState().MetodeStore.dataGejala
+    const dataPenyakit = getState().MetodeStore.dataPenyakit
+    const dataPengetahuan = getState().MetodeStore.dataPengetahuan
+
     const dataFuzzifikasi = await fuzzifikasi(formDiagnosa)
 
-    const dataInferensi = await inferensi(dataFuzzifikasi)
+    const dataInferensi = await inferensi(dataFuzzifikasi, dataGejala, dataPenyakit, dataPengetahuan)
 
     const dataDefuzifikasi = await defuzifikasi(dataInferensi)
 
@@ -199,7 +229,11 @@ export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dis
       }
     }
 
-    dispatch(registerUser({ namaAnak, diagnosa, tsukamoto, navigate }))
+    if (isNaN(tsukamoto.defuzifikasi)) {
+      ToastAndroid.show('Maaf, kuesioner yang kamu isi tidak ada di basis pengetahuan sistem kami', ToastAndroid.SHORT);
+    } else {
+      dispatch(registerUser({ namaAnak, diagnosa, tsukamoto, navigate }))
+    }
   } catch (error) {
     console.log(error)
     ToastAndroid.show(error, ToastAndroid.SHORT);

@@ -14,6 +14,7 @@ import {
   FormRegister,
   FormDiagnosa
 } from '../../Components'
+import { getDataMetode } from '../../Redux/Actions/Metode'
 import { clearFormRegister } from '../../Redux/Actions/Auth'
 
 const Register = ({ navigation: { goBack, navigate } }) => {
@@ -27,6 +28,8 @@ const Register = ({ navigation: { goBack, navigate } }) => {
   }))
 
   useFocusEffect(useCallback(() => {
+    dispatch(getDataMetode())
+
     backHandlerAction()
   }, [isNext]))
 

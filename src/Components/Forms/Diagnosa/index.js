@@ -17,7 +17,7 @@ import Input from '../../Inputs'
 import Loading from '../../Loading'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
-import { setTsukamoto } from '../../../Redux/Actions/Tsukamoto'
+import { setTsukamoto } from '../../../Redux/Actions/Metode'
 
 const FormDiagnosa = ({ navigate }) => {
   const [isLoading, setIsLoading] = useState(false)
