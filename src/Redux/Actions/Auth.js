@@ -24,14 +24,14 @@ const formRegister = ({ formRegister }) => ({
   }
 })
 
-const register = ({ userUID, user, diagnosa, tsukamoto, dataForwardChaining }) => ({
+const register = ({ userUID, user, diagnosa, tsukamoto, forwardChaining }) => ({
   type: Types.REGISTER_USER,
   data: {
     userUID,
     user,
     diagnosa,
     tsukamoto,
-    dataForwardChaining
+    forwardChaining
   }
 })
 
@@ -127,17 +127,23 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, dataForwardChainin
 
     await database()
       .ref(`/hasilDiagnosa/${responseRegister.user.uid}`)
-      .set({
-        diagnosa,
-        nilaiTsukamoto: tsukamoto.defuzifikasi
-      })
+      .set([
+        {
+          metode: 'forward chaining',
+          idPenyakit: dataForwardChaining[0].idPenyakit
+        }, {
+          metode: 'fuzzy tsukamoto',
+          diagnosa,
+          nilaiTsukamoto: tsukamoto.defuzifikasi
+        }
+      ])
 
     dispatch(register({
       userUID: responseRegister.user.uid,
       user: formRegister,
       diagnosa,
       tsukamoto,
-      dataForwardChaining
+      forwardChaining: dataForwardChaining[0]
     }))
 
     navigate('Diagnosa')

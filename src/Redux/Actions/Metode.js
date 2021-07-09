@@ -46,6 +46,7 @@ export const getDataMetode = () => async (dispatch) => {
     for (const key in responsePenyakit.val()) {
       dataPenyakit.push({
         idPenyakit: key,
+        namaPenyakit: datasPenyakit[key].namaPenyakit,
         batasAtas: datasPenyakit[key].batasAtas,
         batasBawah: datasPenyakit[key].batasBawah
       })
@@ -247,11 +248,11 @@ const defuzifikasi = (data) => new Promise(async (resolve, reject) => {
   // test reject
 })
 
-const forwardChaining = (data, dataRuleForwardChaining) => new Promise((resolve, reject) => {
+const forwardChaining = (data, dataRuleForwardChaining, dataPenyakit) => new Promise((resolve, reject) => {
   let matchDataRule = []
   let newDataRule = []
   let newDataIdPenyakit = []
-  let dataForwardChaining = []
+  let resultForwardChaining = []
 
   for (let i = 0; i < dataRuleForwardChaining.length; i++) {
     const findIdPenyakit = matchDataRule.find((state) => state.idPenyakit == dataRuleForwardChaining[i].idPenyakit)
@@ -289,16 +290,21 @@ const forwardChaining = (data, dataRuleForwardChaining) => new Promise((resolve,
 
   for (let i = 0; i < newDataIdPenyakit.length; i++) {
     const findDataRule = dataRuleForwardChaining.find((state) => state.idPenyakit == newDataIdPenyakit[i])
-
     const findMatchDataRule = matchDataRule.find((state) => state.idPenyakit == newDataIdPenyakit[i])
 
-    dataForwardChaining.push({
-      idPenyakit: newDataIdPenyakit[i],
-      countDataRule: findDataRule.idGejala.length,
-      countMatchDataRule: findMatchDataRule.idGejala.length,
-      isDiagnosa: findDataRule.idGejala.length == findMatchDataRule.idGejala.length ? true : false
-    })
+    const findNamePenyakit = dataPenyakit.find((state) => state.idPenyakit == newDataIdPenyakit[i])
+
+    if (findDataRule.idGejala.length == findMatchDataRule.idGejala.length) {
+      resultForwardChaining.push({
+        idPenyakit: newDataIdPenyakit[i],
+        namaPenyakit: findNamePenyakit.namaPenyakit,
+        countGejala: findMatchDataRule.idGejala.length
+      })
+    }
   }
+
+  const maxCount = resultForwardChaining.reduce((max, item) => Math.max(max, item.countGejala), resultForwardChaining[0].countGejala)
+  const dataForwardChaining = resultForwardChaining.filter((state) => state.countGejala == maxCount)
 
   resolve(dataForwardChaining)
 })
@@ -318,7 +324,7 @@ export const setMetode = ({ namaAnak, formDiagnosa, navigate }) => async (dispat
     const dataDefuzifikasi = await defuzifikasi(dataInferensi)
 
     //forward chaining
-    const dataForwardChaining = await forwardChaining(formDiagnosa, dataRuleForwardChaining)
+    const dataForwardChaining = await forwardChaining(formDiagnosa, dataRuleForwardChaining, dataPenyakit)
 
     const tsukamoto = {
       fuzzifikasi: dataFuzzifikasi,

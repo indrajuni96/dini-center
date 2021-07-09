@@ -15,10 +15,11 @@ import { BackHandlerNotIsFocusedAction } from '../../Utils'
 const Diagnosa = () => {
   const dispatch = useDispatch()
 
-  const { namaAnak, diagnosa, tsukamoto } = useSelector(state => ({
+  const { namaAnak, diagnosa, tsukamoto, forwardChaining } = useSelector(state => ({
     namaAnak: state.AuthStore.formRegister.namaAnak,
     diagnosa: state.AuthStore.diagnosa,
-    tsukamoto: state.AuthStore.tsukamoto
+    tsukamoto: state.AuthStore.tsukamoto,
+    forwardChaining: state.AuthStore.forwardChaining
   }))
 
   BackHandlerNotIsFocusedAction()
@@ -54,8 +55,8 @@ const Diagnosa = () => {
         <Input
           isHeight
           editable
-          title='Hasil Diagnosa'
-          value='Sedang' />
+          title='Hasil Forward Chaining'
+          value={forwardChaining.namaPenyakit ? forwardChaining.namaPenyakit : ''} />
 
         <Space height={30} />
 
