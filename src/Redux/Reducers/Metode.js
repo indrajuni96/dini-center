@@ -3,7 +3,8 @@ import * as Types from '../Actions/ActionTypes'
 const initialState = {
   dataGejala: [],
   dataPenyakit: [],
-  dataPengetahuan: []
+  dataPengetahuan: [],
+  dataRuleForwardChaining: []
 }
 
 const MetodeReducer = (state = initialState, action) => {
@@ -13,7 +14,8 @@ const MetodeReducer = (state = initialState, action) => {
         ...state,
         dataGejala: action.data.dataGejala,
         dataPenyakit: action.data.dataPenyakit,
-        dataPengetahuan: action.data.dataPengetahuan
+        dataPengetahuan: action.data.dataPengetahuan,
+        dataRuleForwardChaining: action.data.dataRuleForwardChaining
       }
     default:
       return state

@@ -16,6 +16,8 @@ export const getDataMetode = () => async (dispatch) => {
     let dataGejala = []
     let dataPenyakit = []
     let dataPengetahuan = []
+    let groupPengetahuan = []
+    let dataRuleForwardChaining = []
 
     const responseGejala = await database()
       .ref('/gejala')
@@ -58,11 +60,57 @@ export const getDataMetode = () => async (dispatch) => {
       })
     }
 
+    for (let i = 0; i < dataPengetahuan.length; i++) {
+      const checkIdPenyakit = groupPengetahuan.find((state) => state.idPenyakit == dataPengetahuan[i].idPenyakit)
+
+      if (!checkIdPenyakit) {
+        groupPengetahuan.push({
+          idPenyakit: dataPengetahuan[i].idPenyakit,
+          idGejala: []
+        })
+      }
+    }
+
+    for (let x = 0; x < groupPengetahuan.length; x++) {
+      const findDataPengetahuan = dataPengetahuan.filter((state) => state.idPenyakit == groupPengetahuan[x].idPenyakit)
+
+      for (let y = 0; y < findDataPengetahuan.length; y++) {
+        if (findDataPengetahuan[y].idPenyakit == groupPengetahuan[x].idPenyakit) {
+          const findGejala1 = groupPengetahuan.find((state) => state.idGejala == findDataPengetahuan[y].idGejala1)
+
+          if (!findGejala1) {
+            groupPengetahuan[x].idGejala.push(findDataPengetahuan[y].idGejala1)
+          }
+
+          const findGejala2 = groupPengetahuan.find((state) => state.idGejala == findDataPengetahuan[y].idGejala2)
+
+          if (!findGejala2) {
+            groupPengetahuan[x].idGejala.push(findDataPengetahuan[y].idGejala2)
+          }
+        }
+      }
+    }
+
+    for (let y = 0; y < groupPengetahuan.length; y++) {
+      let removeDoubleIdGejala = groupPengetahuan[y].idGejala.filter((item, index) => {
+        return groupPengetahuan[y].idGejala.indexOf(item) === index
+      })
+
+      //NOTE jagan ini jagan dihapus
+      // groupPengetahuan[y].idGejalaRemoveDouble = removeDoubleIdGejala
+
+      dataRuleForwardChaining.push({
+        idPenyakit: groupPengetahuan[y].idPenyakit,
+        idGejala: removeDoubleIdGejala
+      })
+    }
+
     dispatch(setDataMetode({
       data: {
         dataGejala,
         dataPenyakit,
-        dataPengetahuan
+        dataPengetahuan,
+        dataRuleForwardChaining
       }
     }))
   } catch (error) {
