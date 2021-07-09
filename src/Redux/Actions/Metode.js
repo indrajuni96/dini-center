@@ -247,17 +247,78 @@ const defuzifikasi = (data) => new Promise(async (resolve, reject) => {
   // test reject
 })
 
-export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dispatch, getState) => {
+const forwardChaining = (data, dataRuleForwardChaining) => new Promise((resolve, reject) => {
+  let matchDataRule = []
+  let newDataRule = []
+  let newDataIdPenyakit = []
+  let dataForwardChaining = []
+
+  for (let i = 0; i < dataRuleForwardChaining.length; i++) {
+    const findIdPenyakit = matchDataRule.find((state) => state.idPenyakit == dataRuleForwardChaining[i].idPenyakit)
+
+    if (!findIdPenyakit) {
+      newDataIdPenyakit.push(dataRuleForwardChaining[i].idPenyakit)
+
+      matchDataRule.push({
+        idPenyakit: dataRuleForwardChaining[i].idPenyakit,
+        idGejala: []
+      })
+    }
+  }
+
+  for (let i = 0; i < dataRuleForwardChaining.length; i++) {
+    for (let x = 0; x < dataRuleForwardChaining[i].idGejala.length; x++) {
+      newDataRule.push({
+        idPenyakit: dataRuleForwardChaining[i].idPenyakit,
+        idGejala: dataRuleForwardChaining[i].idGejala[x]
+      })
+    }
+  }
+
+  for (let n = 0; n < data.length; n++) {
+    if (data[n].select) {
+      for (let i = 0; i < newDataRule.length; i++) {
+        for (let s = 0; s < matchDataRule.length; s++) {
+          if (data[n].idGejala == newDataRule[i].idGejala && matchDataRule[s].idPenyakit == newDataRule[i].idPenyakit) {
+            matchDataRule[s].idGejala.push(data[n].idGejala)
+          }
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < newDataIdPenyakit.length; i++) {
+    const findDataRule = dataRuleForwardChaining.find((state) => state.idPenyakit == newDataIdPenyakit[i])
+
+    const findMatchDataRule = matchDataRule.find((state) => state.idPenyakit == newDataIdPenyakit[i])
+
+    dataForwardChaining.push({
+      idPenyakit: newDataIdPenyakit[i],
+      countDataRule: findDataRule.idGejala.length,
+      countMatchDataRule: findMatchDataRule.idGejala.length,
+      isDiagnosa: findDataRule.idGejala.length == findMatchDataRule.idGejala.length ? true : false
+    })
+  }
+
+  resolve(dataForwardChaining)
+})
+
+export const setMetode = ({ namaAnak, formDiagnosa, navigate }) => async (dispatch, getState) => {
   try {
     const dataGejala = getState().MetodeStore.dataGejala
     const dataPenyakit = getState().MetodeStore.dataPenyakit
     const dataPengetahuan = getState().MetodeStore.dataPengetahuan
+    const dataRuleForwardChaining = getState().MetodeStore.dataRuleForwardChaining
 
+    // fuzzy tsukamoto
     const dataFuzzifikasi = await fuzzifikasi(formDiagnosa)
 
     const dataInferensi = await inferensi(dataFuzzifikasi, dataGejala, dataPenyakit, dataPengetahuan)
 
     const dataDefuzifikasi = await defuzifikasi(dataInferensi)
+
+    //forward chaining
+    const dataForwardChaining = await forwardChaining(formDiagnosa, dataRuleForwardChaining)
 
     const tsukamoto = {
       fuzzifikasi: dataFuzzifikasi,
@@ -278,9 +339,10 @@ export const setTsukamoto = ({ namaAnak, formDiagnosa, navigate }) => async (dis
     }
 
     if (isNaN(tsukamoto.defuzifikasi)) {
+      // Tidak ada jenis diagnosa yang sesuai dengan gejala terpilih
       ToastAndroid.show('Maaf, kuesioner yang kamu isi tidak ada di basis pengetahuan sistem kami', ToastAndroid.SHORT);
     } else {
-      dispatch(registerUser({ namaAnak, diagnosa, tsukamoto, navigate }))
+      dispatch(registerUser({ namaAnak, diagnosa, tsukamoto, dataForwardChaining, navigate }))
     }
   } catch (error) {
     console.log(error)

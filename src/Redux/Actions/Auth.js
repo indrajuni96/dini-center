@@ -24,13 +24,14 @@ const formRegister = ({ formRegister }) => ({
   }
 })
 
-const register = ({ userUID, user, diagnosa, tsukamoto }) => ({
+const register = ({ userUID, user, diagnosa, tsukamoto, dataForwardChaining }) => ({
   type: Types.REGISTER_USER,
   data: {
     userUID,
     user,
     diagnosa,
-    tsukamoto
+    tsukamoto,
+    dataForwardChaining
   }
 })
 
@@ -102,7 +103,7 @@ export const loginUser = (data) => async (dispatch) => {
   }
 }
 
-export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => async (dispatch, getState) => {
+export const registerUser = ({ namaAnak, diagnosa, tsukamoto, dataForwardChaining, navigate }) => async (dispatch, getState) => {
   try {
     dispatch(isLoading(true))
 
@@ -135,7 +136,8 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => asy
       userUID: responseRegister.user.uid,
       user: formRegister,
       diagnosa,
-      tsukamoto
+      tsukamoto,
+      dataForwardChaining
     }))
 
     navigate('Diagnosa')

@@ -7,7 +7,8 @@ const initialState = {
   user: {},
   formRegister: {},
   diagnosa: {},
-  tsukamoto: {}
+  tsukamoto: {},
+  forwardChaining: []
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -39,7 +40,8 @@ const AuthReducer = (state = initialState, action) => {
         userUID: action.data.userUID,
         user: action.data.user,
         diagnosa: action.data.diagnosa,
-        tsukamoto: action.data.tsukamoto
+        tsukamoto: action.data.tsukamoto,
+        forwardChaining: action.data.dataForwardChaining
       }
     case Types.CLEAR_FORM_REGISTER:
       return {
