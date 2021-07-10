@@ -103,7 +103,7 @@ export const loginUser = (data) => async (dispatch) => {
   }
 }
 
-export const registerUser = ({ namaAnak, diagnosa, tsukamoto, dataForwardChaining, navigate }) => async (dispatch, getState) => {
+export const registerUser = ({ namaAnak, tsukamoto, dataForwardChaining, navigate }) => async (dispatch, getState) => {
   try {
     dispatch(isLoading(true))
 
@@ -133,7 +133,7 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, dataForwardChainin
           idPenyakit: dataForwardChaining[0].idPenyakit
         }, {
           metode: 'fuzzy tsukamoto',
-          diagnosa,
+          diagnosa: tsukamoto.fuzzifikasi,
           nilaiTsukamoto: tsukamoto.defuzifikasi
         }
       ])
@@ -141,7 +141,6 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, dataForwardChainin
     dispatch(register({
       userUID: responseRegister.user.uid,
       user: formRegister,
-      diagnosa,
       tsukamoto,
       forwardChaining: dataForwardChaining[0]
     }))

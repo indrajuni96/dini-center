@@ -13,7 +13,7 @@ const CardHasilDiagnosa = ({ item }) => {
         isHeight
         editable
         title={item.namaGejala}
-        value={item.nilai ? item.nilai : ''} />
+        value={item.nilaiInput ? item.nilaiInput : ''} />
     </View>
   )
 }

@@ -15,9 +15,8 @@ import { BackHandlerNotIsFocusedAction } from '../../Utils'
 const Diagnosa = () => {
   const dispatch = useDispatch()
 
-  const { namaAnak, diagnosa, tsukamoto, forwardChaining } = useSelector(state => ({
+  const { namaAnak, tsukamoto, forwardChaining } = useSelector(state => ({
     namaAnak: state.AuthStore.formRegister.namaAnak,
-    diagnosa: state.AuthStore.diagnosa,
     tsukamoto: state.AuthStore.tsukamoto,
     forwardChaining: state.AuthStore.forwardChaining
   }))

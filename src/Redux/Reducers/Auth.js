@@ -6,7 +6,6 @@ const initialState = {
   isLoading: false,
   user: {},
   formRegister: {},
-  diagnosa: {},
   tsukamoto: {},
   forwardChaining: {}
 }
@@ -39,7 +38,6 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
         userUID: action.data.userUID,
         user: action.data.user,
-        diagnosa: action.data.diagnosa,
         tsukamoto: action.data.tsukamoto,
         forwardChaining: action.data.forwardChaining
       }

@@ -72,7 +72,7 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
             dataFuzzyTsukamoto.push({
               key: uuidv4(),
               namaGejala: datas[key].diagnosa[i].namaGejala,
-              nilai: datas[key].diagnosa[i].nilai
+              nilaiInput: datas[key].diagnosa[i].nilaiInput
             })
           }
 

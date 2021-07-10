@@ -130,6 +130,8 @@ const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
       dataFuzzifikasi.push({
         idGejala: data[i].idGejala,
         kode: data[i].kode,
+        namaGejala: data[i].namaGejala,
+        nilaiInput: data[i].nilai,
         nilaiFuzzifikasi: '0'
       })
     }
@@ -140,6 +142,8 @@ const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
       dataFuzzifikasi.push({
         idGejala: data[i].idGejala,
         kode: data[i].kode,
+        namaGejala: data[i].namaGejala,
+        nilaiInput: data[i].nilai,
         nilaiFuzzifikasi: result.toFixed(2)
       })
     }
@@ -148,6 +152,8 @@ const fuzzifikasi = (data) => new Promise(async (resolve, reject) => {
       dataFuzzifikasi.push({
         idGejala: data[i].idGejala,
         kode: data[i].kode,
+        namaGejala: data[i].namaGejala,
+        nilaiInput: data[i].nilai,
         nilaiFuzzifikasi: '1'
       })
     }
@@ -332,23 +338,11 @@ export const setMetode = ({ namaAnak, formDiagnosa, navigate }) => async (dispat
       defuzifikasi: dataDefuzifikasi.toFixed(2)
     }
 
-    let diagnosa = []
-
-    for (let i = 0; i < formDiagnosa.length; i++) {
-      if (formDiagnosa[i].select) {
-        diagnosa.push({
-          // idGejala: formDiagnosa[i].idGejala,
-          namaGejala: formDiagnosa[i].namaGejala,
-          nilai: formDiagnosa[i].nilai,
-        })
-      }
-    }
-
     if (isNaN(tsukamoto.defuzifikasi)) {
       // Tidak ada jenis diagnosa yang sesuai dengan gejala terpilih
       ToastAndroid.show('Maaf, kuesioner yang kamu isi tidak ada di basis pengetahuan sistem kami', ToastAndroid.SHORT);
     } else {
-      dispatch(registerUser({ namaAnak, diagnosa, tsukamoto, dataForwardChaining, navigate }))
+      dispatch(registerUser({ namaAnak, tsukamoto, dataForwardChaining, navigate }))
     }
   } catch (error) {
     console.log(error)

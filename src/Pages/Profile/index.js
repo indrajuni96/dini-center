@@ -59,12 +59,12 @@ const Profile = ({ navigation: { goBack } }) => {
             title='Email'
             value={user ? user.email : ''} />
 
-          <Input
+          {/* <Input
             isHeight
             editable
             securePassword
             title='Password'
-            value='******' />
+            value='******' /> */}
 
           {/* <Button
             red
