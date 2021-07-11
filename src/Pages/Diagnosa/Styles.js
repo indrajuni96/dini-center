@@ -19,6 +19,14 @@ const Styles = StyleSheet.create({
     fontSize: SCREEN_HEIGHT * 0.025,
     fontFamily: 'Poppins-SemiBold'
   },
+  textKuesioner: {
+    color: colors.black,
+    fontSize: SCREEN_HEIGHT * 0.023,
+    fontFamily: 'Poppins-SemiBold'
+  },
+  safeAreaView: {
+    flex: 1,
+  }
 })
 
 export default Styles

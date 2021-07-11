@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react'
-import { View } from 'react-native'
+import {
+  View,
+  Text,
+  FlatList,
+  SafeAreaView,
+} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Styles from './Styles'
@@ -7,7 +12,8 @@ import {
   Space,
   Input,
   Header,
-  Button
+  Button,
+  CardHasilDiagnosa
 } from '../../Components'
 import { setIsDiagnosa } from '../../Redux/Actions/Auth'
 import { BackHandlerNotIsFocusedAction } from '../../Utils'
@@ -57,12 +63,30 @@ const Diagnosa = () => {
           title='Hasil Forward Chaining'
           value={forwardChaining.namaPenyakit ? forwardChaining.namaPenyakit : ''} />
 
+        <Space height={5} />
+
+        <View>
+          <Text style={Styles.textKuesioner}>Kuesioner yang diisi</Text>
+        </View>
+
+        <Space height={5} />
+
+        <SafeAreaView>
+          <FlatList
+            data={tsukamoto.fuzzifikasi}
+            renderItem={({ item }) => <CardHasilDiagnosa item={item} />}
+            keyExtractor={item => item.kode}
+            showsVerticalScrollIndicator={false} />
+        </SafeAreaView>
+
         <Space height={30} />
 
         <Button
           red
           title='Dashboard'
           onPress={() => dispatch(setIsDiagnosa(true))} />
+
+        <Space height={5} />
       </View>
     </View>
   )

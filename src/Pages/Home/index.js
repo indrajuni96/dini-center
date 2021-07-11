@@ -105,7 +105,7 @@ const Home = ({ navigation: { isFocused, navigate } }) => {
           <Space width={5} />
 
           <Text style={Styles.textRegular15}>
-            {tanggal('d MMMM YYYY')}
+            {tanggal('D MMMM YYYY')}
           </Text>
         </View>
       </View>
