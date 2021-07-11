@@ -9,7 +9,7 @@ import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import Styles from './Styles'
 import { colors } from '../../../Utils'
 
-const ListHistory = ({ disabled, title, status, onPress }) => {
+const ListHistory = ({ disabled, item, onPress }) => {
   return (
     <Pressable
       disabled={disabled}
@@ -24,11 +24,11 @@ const ListHistory = ({ disabled, title, status, onPress }) => {
 
       <View>
         <Text style={Styles.textSemiBold15}>
-          {title}
+          {item.namaGame}
         </Text>
 
         <Text style={Styles.textRegular18}>
-          {status}
+          {item.status}
         </Text>
       </View>
     </Pressable>

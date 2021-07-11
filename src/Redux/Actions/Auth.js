@@ -24,13 +24,14 @@ const formRegister = ({ formRegister }) => ({
   }
 })
 
-const register = ({ userUID, user, diagnosa, tsukamoto }) => ({
+const register = ({ userUID, user, diagnosa, tsukamoto, forwardChaining }) => ({
   type: Types.REGISTER_USER,
   data: {
     userUID,
     user,
     diagnosa,
-    tsukamoto
+    tsukamoto,
+    forwardChaining
   }
 })
 
@@ -102,12 +103,13 @@ export const loginUser = (data) => async (dispatch) => {
   }
 }
 
-export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => async (dispatch, getState) => {
+export const registerUser = ({ namaAnak, tsukamoto, dataForwardChaining, navigate }) => async (dispatch, getState) => {
   try {
     dispatch(isLoading(true))
 
     const formRegister = getState().AuthStore.formRegister
 
+    formRegister.level = 'user'
     formRegister.namaAnak = namaAnak
 
     const responseRegister = await auth().createUserWithEmailAndPassword(formRegister.email.toLowerCase(), formRegister.password)
@@ -115,25 +117,32 @@ export const registerUser = ({ namaAnak, diagnosa, tsukamoto, navigate }) => asy
     await database()
       .ref(`/users/${responseRegister.user.uid}`)
       .set({
+        level: formRegister.level,
         namaOrangTua: formRegister.namaOrangTua,
         noTelepon: formRegister.noTelepon,
         alamat: formRegister.alamat,
         email: formRegister.email,
-        namaAnak: namaAnak,
+        namaAnak: formRegister.namaAnak,
       })
 
     await database()
       .ref(`/hasilDiagnosa/${responseRegister.user.uid}`)
-      .set({
-        diagnosa,
-        nilaiTsukamoto: tsukamoto.defuzifikasi
-      })
+      .set([
+        {
+          metode: 'forward chaining',
+          idPenyakit: dataForwardChaining[0].idPenyakit
+        }, {
+          metode: 'fuzzy tsukamoto',
+          diagnosa: tsukamoto.fuzzifikasi,
+          nilaiTsukamoto: tsukamoto.defuzifikasi
+        }
+      ])
 
     dispatch(register({
       userUID: responseRegister.user.uid,
       user: formRegister,
-      diagnosa,
-      tsukamoto
+      tsukamoto,
+      forwardChaining: dataForwardChaining[0]
     }))
 
     navigate('Diagnosa')

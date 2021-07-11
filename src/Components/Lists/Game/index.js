@@ -9,7 +9,7 @@ import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import Styles from './Styles'
 import { colors } from '../../../Utils'
 
-const ListGame = ({ disabled, title, onPress }) => {
+const ListGame = ({ disabled, item, onPress }) => {
   return (
     <Pressable
       disabled={disabled}
@@ -24,7 +24,7 @@ const ListGame = ({ disabled, title, onPress }) => {
 
       <View style={Styles.contentText}>
         <Text style={Styles.textSemiBold15}>
-          {title}
+          {item.namaGame}
         </Text>
       </View>
     </Pressable>

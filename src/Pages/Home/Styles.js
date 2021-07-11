@@ -81,6 +81,9 @@ const Styles = StyleSheet.create({
     fontSize: SCREEN_HEIGHT * 0.022,
     fontFamily: 'Poppins-SemiBold'
   },
+  safeAreaView: {
+    flex: 1
+  }
 })
 
 export default Styles

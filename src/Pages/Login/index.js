@@ -111,9 +111,8 @@ const Login = ({ navigation: { goBack } }) => {
           </View>
         </ScrollView>
 
+        {isLoading ? <Loading /> : null}
       </View>
-
-      {isLoading ? <Loading /> : null}
     </>
   )
 }

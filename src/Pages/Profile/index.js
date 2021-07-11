@@ -59,17 +59,17 @@ const Profile = ({ navigation: { goBack } }) => {
             title='Email'
             value={user ? user.email : ''} />
 
-          <Input
+          {/* <Input
             isHeight
             editable
             securePassword
             title='Password'
-            value='******' />
+            value='******' /> */}
 
-          <Button
+          {/* <Button
             red
             title='Ubah Profile'
-            onPress={() => console.log('ubah profile')} />
+            onPress={() => console.log('ubah profile')} /> */}
         </View>
 
         <Space height={30} />

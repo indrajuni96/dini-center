@@ -35,9 +35,9 @@ const FormRegister = ({ securePassword, onPressNext, onPressSecurePassword }) =>
     namaOrangTua: Yup.string()
       .required('Wajib Diisi')
       .trim('Wajib Diisi'),
-    noTelepon: Yup.string()
-      .required('Wajib Diisi')
-      .trim('Wajib Diisi'),
+    // noTelepon: Yup.string()
+    //   .required('Wajib Diisi')
+    //   .trim('Wajib Diisi'),
     alamat: Yup.string()
       .required('Wajib Diisi')
       .trim('Wajib Diisi'),
