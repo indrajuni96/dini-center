@@ -124,11 +124,11 @@ const FormDiagnosa = ({ navigate }) => {
     }
   }
 
-  if (isLoading) {
-    return (
-      <Loading isDefault />
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <Loading isDefault />
+  //   )
+  // }
 
   return (
     <View style={Styles.contentForm}>

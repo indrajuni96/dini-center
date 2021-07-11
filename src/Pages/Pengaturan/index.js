@@ -1,6 +1,10 @@
 import React from 'react'
-import { View } from 'react-native'
+import {
+  View,
+  ToastAndroid
+} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import {
@@ -16,9 +20,19 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
 
   const dispatch = useDispatch()
 
+  const { isConnected } = useNetInfo()
+
   const { user } = useSelector((state) => ({
     user: state.AuthStore.user
   }))
+
+  const onNavigate = (routeName) => {
+    if (isConnected) {
+      navigate(routeName)
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
+  }
 
   return (
     <View style={Styles.container}>
@@ -36,14 +50,14 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
             <ListPengaturan
               isOnPress
               title='Profile'
-              onPress={() => navigate('Profile')} />
+              onPress={() => onNavigate('Profile')} />
 
             <Space height={2} />
 
             <ListPengaturan
               isOnPress
               title='Hasil Diagnosa'
-              onPress={() => navigate('HasilDiagnosa')} />
+              onPress={() => onNavigate('HasilDiagnosa')} />
 
             <Space height={2} />
           </>

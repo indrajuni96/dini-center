@@ -2,10 +2,12 @@ import React, { useState, useCallback } from 'react'
 import {
   View,
   FlatList,
-  SafeAreaView
+  SafeAreaView,
+  ToastAndroid
 } from 'react-native'
 import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNetInfo } from "@react-native-community/netinfo";
 
 import Styles from './Styles'
 import { BackHandlerAction } from '../../Utils'
@@ -18,6 +20,8 @@ import {
 
 const Game = ({ navigation: { navigate, isFocused } }) => {
   BackHandlerAction(isFocused)
+
+  const { isConnected } = useNetInfo()
 
   const [isLoading, setIsLoading] = useState(false)
   const [dataGame, setDataGame] = useState([])
@@ -54,6 +58,14 @@ const Game = ({ navigation: { navigate, isFocused } }) => {
     }
   }
 
+  const onNavigate = (routeName, item) => {
+    if (isConnected) {
+      navigate(routeName, { item })
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
+  }
+
   return (
     <View style={Styles.container}>
       <Header
@@ -69,7 +81,7 @@ const Game = ({ navigation: { navigate, isFocused } }) => {
             renderItem={({ item }) => (
               <ListGame
                 item={item}
-                onPress={() => navigate('StartGame', { item })} />
+                onPress={() => onNavigate('StartGame', item)} />
             )}
             keyExtractor={item => item.key}
             showsVerticalScrollIndicator={false} />

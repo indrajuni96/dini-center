@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import Voice from '@react-native-community/voice';
 import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
+import { useNetInfo } from "@react-native-community/netinfo";
 import FontAwesome from 'react-native-vector-icons/dist/FontAwesome'
 import IconIonicons from 'react-native-vector-icons/dist/Ionicons'
 
@@ -25,6 +26,8 @@ import {
 
 const StartGame = ({ route, navigation: { goBack } }) => {
   const { item } = route.params
+
+  const { isConnected } = useNetInfo()
 
   const { userUID, user } = useSelector((state) => ({
     userUID: state.AuthStore.userUID,
@@ -107,17 +110,29 @@ const StartGame = ({ route, navigation: { goBack } }) => {
   }
 
   const onVoice = () => {
-    Tts.stop()
-    Tts.speak(item.namaGame)
+    if (isConnected) {
+      Tts.stop()
+      Tts.speak(item.namaGame)
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
+    }
   }
 
-  const onMulai = async () => {
+  const startVoice = async () => {
     try {
       setIsEnabled(true)
 
       await Voice.start('id')
-    } catch (erorr) {
+    } catch (error) {
       console.log(error)
+    }
+  }
+
+  const onMulai = async () => {
+    if (isConnected) {
+      startVoice()
+    } else {
+      ToastAndroid.show('Tidak ada koneksi internet', ToastAndroid.SHORT);
     }
   }
 
