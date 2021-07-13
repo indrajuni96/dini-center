@@ -7,6 +7,7 @@ import Diagnosa from './Diagnosa'
 import Register from './Register'
 import StartGame from './StartGame'
 import Pengaturan from './Pengaturan'
+import Informasi from './Informasi'
 import LandingPage from './LandingPage'
 import HasilDiagnosa from './HasilDiagnosa'
 
@@ -20,6 +21,7 @@ export {
   Register,
   StartGame,
   Pengaturan,
+  Informasi,
   LandingPage,
   HasilDiagnosa
 }

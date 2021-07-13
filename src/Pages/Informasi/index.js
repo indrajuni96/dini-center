@@ -15,15 +15,13 @@ import {
   Space,
   Header,
   Input,
-  Loading,
-  CardHasilDiagnosa
+  Loading
 } from '../../Components'
 
-const HasilDiagnosa = ({ navigation: { goBack } }) => {
+const Informasi = ({ navigation: { goBack } }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [nilaiTsukamoto, setNilaiTsukamoto] = useState('0')
+  const [nilaiAnak, setNilaiAnak] = useState('0')
   const [dataPenyakit, setDataPenyakit] = useState({})
-  const [dataDiagnosa, setDataDiagnosa] = useState([])
 
   const { userUID } = useSelector((state) => ({
     userUID: state.AuthStore.userUID
@@ -38,10 +36,14 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
       setIsLoading(true)
 
       let dataPenyakit = []
-      let dataFuzzyTsukamoto = []
+      let dataRiwayatGame = []
 
       const responseHasilDiagnosa = await database()
         .ref(`/hasilDiagnosa/${userUID}`)
+        .once('value')
+
+      const responseRiwayatGame = await database()
+        .ref('/riwayatGame')
         .once('value')
 
       const responsePenyakit = await database()
@@ -50,6 +52,7 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
 
       const datas = responseHasilDiagnosa.val()
       const datasPenyakit = responsePenyakit.val()
+      const datasRiwayatGame = responseRiwayatGame.val()
 
       for (const key in responsePenyakit.val()) {
         dataPenyakit.push({
@@ -68,20 +71,24 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
 
           setDataPenyakit(findPenyakit)
         }
+      }
 
-        if (datas[key].metode == 'fuzzy tsukamoto') {
-          for (let i = 0; i < datas[key].diagnosa.length; i++) {
-            dataFuzzyTsukamoto.push({
-              key: uuidv4(),
-              namaGejala: datas[key].diagnosa[i].namaGejala,
-              nilaiInput: datas[key].diagnosa[i].nilaiInput
-            })
-          }
-
-          setDataDiagnosa(dataFuzzyTsukamoto)
-          setNilaiTsukamoto(datas[key].nilaiTsukamoto)
+      for (const key in responseRiwayatGame.val()) {
+        if (datasRiwayatGame[key].idUser == userUID) {
+          dataRiwayatGame.push({
+            key,
+            namaGame: datasRiwayatGame[key].namaGame,
+            status: datasRiwayatGame[key].status
+          })
         }
       }
+
+      const countGameBerhasil = dataRiwayatGame.filter((riwayatGame) => riwayatGame.status == 'Berhasil menggucapkan')
+
+      const resultCountGame = (countGameBerhasil.length / dataRiwayatGame.length * 100).toFixed(0)
+      setNilaiAnak(resultCountGame)
+
+      // if()
     } catch (error) {
       console.log(error)
     } finally {
@@ -92,7 +99,7 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
   return (
     <View style={Styles.container}>
       <Header
-        title='Hasil Diagnosa'
+        title='Informasi'
         onPress={() => goBack()} />
 
       <Space height={30} />
@@ -102,30 +109,42 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
           <Input
             isHeight
             editable
-            title='Hasil Forward Chaining'
-            value={dataPenyakit.namaPenyakit ? dataPenyakit.namaPenyakit : ''} />
+            title='Diagnosa'
+            value={dataPenyakit ? dataPenyakit.namaPenyakit : ''} />
+
+          <View style={Styles.contentBorder}>
+            <Text style={Styles.textTitle}>Penilaian Perkembangan Anak</Text>
+
+            <Text style={Styles.text}>
+              {nilaiAnak}%
+            </Text>
+          </View>
+
+          <Space height={10} />
 
           <Input
             isHeight
             editable
-            title='Hasil Fuzzy Tsukamoto'
-            value={nilaiTsukamoto} />
+            title='Termasuk Tipe Autis'
+            value={dataPenyakit ? dataPenyakit.tipeAutis : ''} />
 
-          <Space height={5} />
+          {/* <Input
+            isHeight
+            editable
+            title='Penanganan'
+            value={dataPenyakit.penanganan ? dataPenyakit.penanganan : ''} /> */}
 
           <View>
-            <Text style={Styles.textKuesioner}>Kuesioner yang diisi</Text>
+            <Text style={Styles.textTitle}>Penanganan</Text>
+
+            <Text style={Styles.text}>
+              {/* {dataPenyakit.penanganan ? dataPenyakit.penanganan : ''} */}
+              memberikan anak terapi wicara.{"\n\n"}
+
+              tips untuk memberikan anak terapi wicara :{"\n"}
+              - melakukan diskusi sederhana dengan anak
+            </Text>
           </View>
-
-          <Space height={5} />
-
-          <SafeAreaView style={Styles.safeAreaView}>
-            <FlatList
-              data={dataDiagnosa}
-              renderItem={({ item }) => <CardHasilDiagnosa item={item} />}
-              keyExtractor={item => item.key}
-              showsVerticalScrollIndicator={false} />
-          </SafeAreaView>
 
           <Space height={10} />
         </>}
@@ -133,4 +152,4 @@ const HasilDiagnosa = ({ navigation: { goBack } }) => {
   )
 }
 
-export default HasilDiagnosa
+export default Informasi

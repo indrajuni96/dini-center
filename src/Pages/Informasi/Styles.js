@@ -8,25 +8,25 @@ const Styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingVertical: SCREEN_HEIGHT * 0.02,
+    paddingTop: SCREEN_HEIGHT * 0.02,
     paddingHorizontal: SCREEN_WIDTH * 0.03,
-  },
-  contentForm: {
-    flex: 1,
-    paddingHorizontal: SCREEN_WIDTH * 0.03,
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: SCREEN_HEIGHT * 0.025,
-    fontFamily: 'Poppins-SemiBold'
-  },
-  textKuesioner: {
-    color: colors.black,
-    fontSize: SCREEN_HEIGHT * 0.023,
-    fontFamily: 'Poppins-SemiBold'
   },
   safeAreaView: {
-    flex: 1
+    flex: 1,
+  },
+  contentBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.silverLigth,
+  },
+  textTitle: {
+    color: colors.silver,
+    fontSize: SCREEN_HEIGHT * 0.02,
+    fontFamily: 'Poppins-Regular'
+  },
+  text: {
+    color: colors.black,
+    fontSize: SCREEN_HEIGHT * 0.025,
+    fontFamily: 'Poppins-Regular',
   }
 })
 

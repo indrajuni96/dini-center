@@ -71,7 +71,7 @@ const Diagnosa = () => {
 
         <Space height={5} />
 
-        <SafeAreaView>
+        <SafeAreaView style={Styles.safeAreaView}>
           <FlatList
             data={tsukamoto.fuzzifikasi}
             renderItem={({ item }) => <CardHasilDiagnosa item={item} />}
@@ -79,7 +79,7 @@ const Diagnosa = () => {
             showsVerticalScrollIndicator={false} />
         </SafeAreaView>
 
-        <Space height={30} />
+        <Space height={10} />
 
         <Button
           red
