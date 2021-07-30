@@ -122,27 +122,11 @@ const Informasi = ({ navigation: { goBack } }) => {
 
           <Space height={10} />
 
-          <Input
-            isHeight
-            editable
-            title='Termasuk Tipe Autis'
-            value={dataPenyakit ? dataPenyakit.tipeAutis : ''} />
-
-          {/* <Input
-            isHeight
-            editable
-            title='Penanganan'
-            value={dataPenyakit.penanganan ? dataPenyakit.penanganan : ''} /> */}
-
           <View>
             <Text style={Styles.textTitle}>Penanganan</Text>
 
             <Text style={Styles.text}>
-              {/* {dataPenyakit.penanganan ? dataPenyakit.penanganan : ''} */}
-              memberikan anak terapi wicara.{"\n\n"}
-
-              tips untuk memberikan anak terapi wicara :{"\n"}
-              - melakukan diskusi sederhana dengan anak
+              {dataPenyakit.penanganan ? dataPenyakit.penanganan : ''}
             </Text>
           </View>
 
