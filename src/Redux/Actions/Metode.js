@@ -244,7 +244,7 @@ const defuzifikasi = (data) => new Promise(async (resolve, reject) => {
   let hitungPredikat = 0
 
   for (let i = 0; i < data.length; i++) {
-    const x = data[i].nilaiGejala1 * data[i].nilaiZ
+    const x = data[i].nilaiMin * data[i].nilaiZ
 
     hitungPredikat += data[i].nilaiMin
     hitungTambah += x

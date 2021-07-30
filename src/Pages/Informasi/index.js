@@ -2,10 +2,7 @@ import React, { useState, useCallback } from 'react'
 import {
   View,
   Text,
-  FlatList,
-  SafeAreaView
 } from 'react-native'
-import { v4 as uuidv4 } from 'uuid'
 import { useSelector } from 'react-redux'
 import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
@@ -87,8 +84,6 @@ const Informasi = ({ navigation: { goBack } }) => {
 
       const resultCountGame = (countGameBerhasil.length / dataRiwayatGame.length * 100).toFixed(0)
       setNilaiAnak(resultCountGame)
-
-      // if()
     } catch (error) {
       console.log(error)
     } finally {
@@ -116,7 +111,7 @@ const Informasi = ({ navigation: { goBack } }) => {
             <Text style={Styles.textTitle}>Penilaian Perkembangan Anak</Text>
 
             <Text style={Styles.text}>
-              {nilaiAnak}%
+              {nilaiAnak != 'NaN' ? nilaiAnak : '0'} %
             </Text>
           </View>
 
