@@ -309,6 +309,8 @@ const forwardChaining = (data, dataRuleForwardChaining, dataPenyakit) => new Pro
     }
   }
 
+  if (resultForwardChaining.length == 0) reject('Tidak terdapat basis pengetahuan dalam sistem')
+
   const maxCount = resultForwardChaining.reduce((max, item) => Math.max(max, item.countGejala), resultForwardChaining[0].countGejala)
   const dataForwardChaining = resultForwardChaining.filter((state) => state.countGejala == maxCount)
 
