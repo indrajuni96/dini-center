@@ -52,7 +52,26 @@ const FormDiagnosa = ({ navigate }) => {
           batasBawah: datas[key].batasBawah,
           batasAtas: datas[key].batasAtas,
           select: false,
-          nilai: ''
+          nilai: '',
+          selectPicker: 30,
+          itemPicker: [
+            {
+              label: 'Sedikit yakin',
+              value: 30
+            },
+            {
+              label: 'Cukup yakin',
+              value: 50
+            },
+            {
+              label: 'Yakin',
+              value: 60
+            },
+            {
+              label: 'Sangat yakin',
+              value: 100
+            }
+          ]
         })
       }
 
@@ -72,6 +91,7 @@ const FormDiagnosa = ({ navigate }) => {
 
     const dataFind = datas.find(data => data.kode == item.kode)
     dataFind.nilai = value
+    dataFind.selectPicker = value
 
     datas = datas.filter(data => data.kode !== item.kode)
 
@@ -87,6 +107,7 @@ const FormDiagnosa = ({ navigate }) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].kode == selectKode) {
         data[i].select = true
+        data[i].nilai = 30
       }
     }
 
@@ -157,9 +178,6 @@ const FormDiagnosa = ({ navigate }) => {
           renderItem={({ item }) => (
             <CardDiagnosa
               item={item}
-              select={item.select}
-              title={item.namaGejala}
-              titleInput={`Nilai (${item.batasBawah} - ${item.batasAtas})`}
               onPressIya={() => onPressIya(item.kode)}
               onPressTidak={() => onPressTidak(item.kode)}
               onChangeInputNilai={onChangeInputNilai} />)}

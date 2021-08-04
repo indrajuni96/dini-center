@@ -16,7 +16,15 @@ const Styles = StyleSheet.create({
   wrapperRadio: {
     flexDirection: 'row',
     justifyContent: 'space-evenly'
-  }
+  },
+  wrapperPicker: {
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: colors.silverLigth,
+    width: SCREEN_WIDTH * 0.4,
+    height: SCREEN_HEIGHT * 0.07,
+  },
 })
 
 export default Styles
