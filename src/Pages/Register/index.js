@@ -62,7 +62,7 @@ const Register = ({ navigation: { goBack, navigate } }) => {
           onPress={() => isNext ? setIsNext(false) : onBack()} />
       </View>
 
-      <Space height={30} />
+      <Space height={20} />
 
       <View style={Styles.contentForm}>
         {isNext ?

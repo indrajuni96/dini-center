@@ -3,8 +3,8 @@ import {
   View,
   Keyboard,
   FlatList,
-  ToastAndroid,
-  ActivityIndicator
+  SafeAreaView,
+  ToastAndroid
 } from 'react-native'
 import { useDispatch } from 'react-redux'
 import database from '@react-native-firebase/database'
@@ -14,7 +14,6 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import Styles from './Styles'
 import Space from '../../Space'
 import Input from '../../Inputs'
-import Loading from '../../Loading'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
 import { setMetode } from '../../../Redux/Actions/Metode'
@@ -124,45 +123,50 @@ const FormDiagnosa = ({ navigate }) => {
     }
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <Loading isDefault />
-  //   )
-  // }
-
-  return (
-    <View style={Styles.contentForm}>
-      <View>
-        <Input
-          isHeight
-          title='Nama Anak'
-          value={namaAnak}
-          errors={messageError}
-          touched={messageError}
-          onKeyPress={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
-          onChangeText={(text) => setNamaAnak(text)} />
-      </View>
-
-      <FlatList
-        data={dataDiagnosa}
-        renderItem={({ item }) => (
-          <CardDiagnosa
-            item={item}
-            select={item.select}
-            title={item.namaGejala}
-            titleInput={`Nilai (${item.batasBawah} - ${item.batasAtas})`}
-            onPressIya={() => onPressIya(item.kode)}
-            onPressTidak={() => onPressTidak(item.kode)}
-            onChangeInputNilai={onChangeInputNilai} />)}
-        keyExtractor={item => item.kode}
-        showsVerticalScrollIndicator={false} />
-
-      <Space height={10} />
-
+  const listFooterComponent = () => (
+    <>
       <Button
         red
         title='Daftar'
         onPress={onPressDaftar} />
+
+      <Space height={10} />
+    </>
+  )
+
+  if (isLoading) {
+    return (
+      <View />
+    )
+  }
+
+  return (
+    <View style={Styles.contentForm}>
+      <Input
+        isHeight
+        title='Nama Anak'
+        value={namaAnak}
+        errors={messageError}
+        touched={messageError}
+        onKeyPress={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
+        onChangeText={(text) => setNamaAnak(text)} />
+
+      <SafeAreaView style={Styles.safeAreaView}>
+        <FlatList
+          data={dataDiagnosa}
+          renderItem={({ item }) => (
+            <CardDiagnosa
+              item={item}
+              select={item.select}
+              title={item.namaGejala}
+              titleInput={`Nilai (${item.batasBawah} - ${item.batasAtas})`}
+              onPressIya={() => onPressIya(item.kode)}
+              onPressTidak={() => onPressTidak(item.kode)}
+              onChangeInputNilai={onChangeInputNilai} />)}
+          keyExtractor={item => item.kode}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={listFooterComponent} />
+      </SafeAreaView>
     </View>
   )
 }

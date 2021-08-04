@@ -32,14 +32,14 @@ const Profile = ({ navigation: { goBack } }) => {
           <Input
             isHeight
             editable
-            title='Nama Anak'
-            value={user ? user.namaAnak : ''} />
+            title='Nama Orang Tua'
+            value={user ? user.namaOrangTua : ''} />
 
           <Input
             isHeight
             editable
-            title='Nama Orang Tua'
-            value={user ? user.namaOrangTua : ''} />
+            title='Nama Anak'
+            value={user ? user.namaAnak : ''} />
 
           <Input
             isHeight

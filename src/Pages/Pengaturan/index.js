@@ -60,6 +60,13 @@ const Pengaturan = ({ navigation: { isFocused, navigate } }) => {
               onPress={() => onNavigate('HasilDiagnosa')} />
 
             <Space height={2} />
+
+            <ListPengaturan
+              isOnPress
+              title='Informasi'
+              onPress={() => onNavigate('Informasi')} />
+
+            <Space height={2} />
           </>
           : null}
 
