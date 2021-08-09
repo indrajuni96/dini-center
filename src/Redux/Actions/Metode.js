@@ -228,7 +228,7 @@ const inferensi = (data, dataGejala, dataPenyakit, dataPengetahuan) => new Promi
 
       dataInferensi.push({
         ...ruleFinal[i],
-        nilaiZ: z.toFixed(2),
+        nilaiZ: Math.round(z.toFixed(2)),
       })
     }
 
