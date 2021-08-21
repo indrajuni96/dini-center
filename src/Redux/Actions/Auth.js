@@ -103,7 +103,7 @@ export const loginUser = (data) => async (dispatch) => {
   }
 }
 
-export const registerUser = ({ namaAnak, tsukamoto, dataForwardChaining, navigate }) => async (dispatch, getState) => {
+export const registerUser = ({ namaAnak, selectPicker, tsukamoto, dataForwardChaining, navigate }) => async (dispatch, getState) => {
   try {
     dispatch(isLoading(true))
 
@@ -130,6 +130,7 @@ export const registerUser = ({ namaAnak, tsukamoto, dataForwardChaining, navigat
       .set([
         {
           metode: 'forward chaining',
+          idUser: selectPicker,
           idPenyakit: dataForwardChaining[0].idPenyakit
         }, {
           metode: 'fuzzy tsukamoto',

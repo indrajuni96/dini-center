@@ -19,7 +19,30 @@ const Styles = StyleSheet.create({
   },
   safeAreaView: {
     flex: 1,
-  }
+  },
+  wrapperPicker: {
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: colors.silverLigth,
+    width: '100%',
+    height: SCREEN_HEIGHT * 0.07,
+  },
+  textPicker: {
+    color: colors.silver,
+    fontSize: SCREEN_HEIGHT * 0.022,
+    fontFamily: 'Poppins-Regular'
+  },
+  textTitle: {
+    color: colors.silver,
+    fontSize: SCREEN_HEIGHT * 0.02,
+    fontFamily: 'Poppins-Regular'
+  },
+  textKuesioner: {
+    color: colors.black,
+    fontSize: SCREEN_HEIGHT * 0.023,
+    fontFamily: 'Poppins-SemiBold'
+  },
 })
 
 export default Styles

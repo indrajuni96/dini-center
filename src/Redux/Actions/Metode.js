@@ -317,7 +317,7 @@ const forwardChaining = (data, dataRuleForwardChaining, dataPenyakit) => new Pro
   resolve(dataForwardChaining)
 })
 
-export const setMetode = ({ namaAnak, formDiagnosa, navigate }) => async (dispatch, getState) => {
+export const setMetode = ({ namaAnak, selectPicker, formDiagnosa, navigate }) => async (dispatch, getState) => {
   try {
     const dataGejala = getState().MetodeStore.dataGejala
     const dataPenyakit = getState().MetodeStore.dataPenyakit
@@ -344,7 +344,7 @@ export const setMetode = ({ namaAnak, formDiagnosa, navigate }) => async (dispat
       // Tidak ada jenis diagnosa yang sesuai dengan gejala terpilih
       ToastAndroid.show('Maaf, kuesioner yang kamu isi tidak ada di basis pengetahuan sistem kami', ToastAndroid.SHORT);
     } else {
-      dispatch(registerUser({ namaAnak, tsukamoto, dataForwardChaining, navigate }))
+      dispatch(registerUser({ namaAnak, selectPicker, tsukamoto, dataForwardChaining, navigate }))
     }
   } catch (error) {
     console.log(error)

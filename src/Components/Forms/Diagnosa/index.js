@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import {
+  Text,
   View,
   Keyboard,
   FlatList,
@@ -7,6 +8,7 @@ import {
   ToastAndroid
 } from 'react-native'
 import { useDispatch } from 'react-redux'
+import { Picker } from '@react-native-picker/picker'
 import database from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native'
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -16,12 +18,15 @@ import Space from '../../Space'
 import Input from '../../Inputs'
 import Button from '../../Buttons/Button'
 import CardDiagnosa from '../../Cards/Diagnosa'
+import { colors } from '../../../Utils'
 import { setMetode } from '../../../Redux/Actions/Metode'
 
 const FormDiagnosa = ({ navigate }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [namaAnak, setNamaAnak] = useState('')
+  const [selectPicker, setSelectPicker] = useState('')
   const [messageError, setMessageError] = useState('')
+  const [dataUser, setDataUser] = useState([])
   const [dataDiagnosa, setDataDiagnosa] = useState([])
 
   const dispatch = useDispatch()
@@ -37,12 +42,18 @@ const FormDiagnosa = ({ navigate }) => {
       setIsLoading(true)
 
       let data = []
+      let dataUser = []
+
       const responseGejala = await database()
         .ref('/gejala')
         .orderByValue('kode')
         .once('value')
+      const responseUser = await database()
+        .ref('/users')
+        .once('value')
 
       const datas = responseGejala.val()
+      const datasUser = responseUser.val()
 
       for (const key in responseGejala.val()) {
         data.push({
@@ -75,9 +86,20 @@ const FormDiagnosa = ({ navigate }) => {
         })
       }
 
+      for (const key in responseUser.val()) {
+        if (datasUser[key].level == 'admin') {
+          dataUser.push({
+            idUser: key,
+            namaUser: datasUser[key].namaOrangTua
+          })
+        }
+      }
+
       data.sort((a, b) => (a.kode > b.kode) ? 1 : -1)
 
+      setDataUser(dataUser)
       setDataDiagnosa(data)
+      setSelectPicker(dataUser[0].idUser)
     } catch (error) {
       console.log(error)
     } finally {
@@ -135,7 +157,7 @@ const FormDiagnosa = ({ navigate }) => {
 
     if (isConnected) {
       if (namaAnak !== '') {
-        dispatch(setMetode({ namaAnak, formDiagnosa: dataDiagnosa, navigate }))
+        dispatch(setMetode({ namaAnak, selectPicker, formDiagnosa: dataDiagnosa, navigate }))
       } else {
         setMessageError('Wajib Diisi')
       }
@@ -171,6 +193,28 @@ const FormDiagnosa = ({ navigate }) => {
         touched={messageError}
         onKeyPress={() => namaAnak !== '' ? setMessageError('') : setMessageError('Wajib Diisi')}
         onChangeText={(text) => setNamaAnak(text)} />
+
+      <Text style={Styles.textTitle}>Konsultan</Text>
+
+      <View style={Styles.wrapperPicker}>
+        <Picker
+          mode="dropdown"
+          dropdownIconColor={colors.silver}
+          selectedValue={selectPicker}
+          onValueChange={(value) => setSelectPicker(value)}>
+          {dataUser.map((item, index) => (
+            <Picker.Item
+              style={Styles.textPicker}
+              key={item.idUser}
+              label={item.namaUser}
+              value={item.idUser} />
+          ))}
+        </Picker>
+      </View>
+
+      <Space height={10} />
+
+      <Text style={Styles.textKuesioner}>Kuesioner</Text>
 
       <SafeAreaView style={Styles.safeAreaView}>
         <FlatList
